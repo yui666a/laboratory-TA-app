@@ -1,0 +1,37 @@
+[
+    {
+        "StudentId": "100001",
+        "StudentName": "たろう",
+        "IpAdress": "",
+        "PcCode": "",
+        "Status": "Logout"
+    },
+    {
+        "StudentId": "100002",
+        "StudentName": "はなこ",
+        "IpAdress": "192.168.1.10",
+        "PcCode": "ics801",
+        "Status": "Login"
+    },
+    {
+        "StudentId": "100003",
+        "StudentName": "こうじ",
+        "IpAdress": "192.168.1.11",
+        "PcCode": "ics802",
+        "Status": "Waiting"
+    },
+    {
+        "StudentId": "100004",
+        "StudentName": "らん",
+        "IpAdress": "192.168.1.12",
+        "PcCode": "ics803",
+        "Status": "Supporting"
+    },
+    {
+        "StudentId": "100005",
+        "StudentName": "まこと",
+        "IpAdress": "192.168.1.13",
+        "PcCode": "ics804",
+        "Status": "Login"
+    }
+]
