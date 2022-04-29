@@ -1,6 +1,7 @@
 <template>
-  <div>
+  <div class="waiting-list-section">
     <div class="waiting-list-area">
+      <!-- vue for statement -->
       <div
         class="waiting-person"
         v-for="waiting in waitingLi"
@@ -10,7 +11,7 @@
         <div class="waiting-person-student"> {{ waiting.studentName }}</div>
       </div>
     </div>
-    <div class="button-area">
+    <div class="hand-button-area">
       <input type="button" class="" value="手を上げる" />
     </div>
   </div>
@@ -36,6 +37,16 @@ export default {
           pcName: "ics831",
           studentId: "123458",
           studentName: "マツシタ　マサヤ",
+        },
+        {
+          pcName: "ics833",
+          studentId: "123459",
+          studentName: "アソウ　タロウ",
+        },
+        {
+          pcName: "ics844",
+          studentId: "123460",
+          studentName: "アイソ　ヒトシ",
         },
       ],
     };
