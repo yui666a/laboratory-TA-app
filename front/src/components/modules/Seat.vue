@@ -3,7 +3,7 @@
     <span> ics{{ seatId }} </span><br />
     <span> {{ seat.studentName }} </span>
   </div>
-  <div v-else class="seat-info">
+  <div v-else class="seat-info sign-out">
     <span> ics{{ seatId }} </span><br />
     <span> - </span>
   </div>
@@ -30,5 +30,8 @@ export default {
   padding:3px;
   border: 1px solid black;
   border-radius: 5px;
+}
+.sign-out{
+  opacity: 0.3;
 }
 </style>
