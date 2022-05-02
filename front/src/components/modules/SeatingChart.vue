@@ -8,7 +8,23 @@
           class="seat-row"
           :set="(seat = '8' + ((column - 1) * 8 + row).toString().padStart(2, '0'))"
         >
-          <SeatInfo :seatId="seat" :seat="seats[seat]"/>
+          <div
+            style="width: 8em; margin: 7px"
+            v-if="row === 1 && column !== 2 && column !== 4 && column !== 9"
+          ></div>
+          <SeatInfo
+            :seatId="seat"
+            :seat="seats[seat]"
+            v-bind:class="{
+              mr50: row === 1 && (column === 2 || column === 4 || column === 9),
+              ml50: row === 1 && column !== 2 && column !== 4 && column !== 9,
+            }"
+            v-bind:style="[column === 9 && row === 8 ? 'display: none;' : '']"
+          />
+          <div
+            style="width: 8em; margin: 7px"
+            v-if="row === 1 && (column === 2 || column === 4)"
+          ></div>
         </div>
       </div>
     </div>
@@ -64,11 +80,20 @@ export default {
 </script>
 
 <style scoped>
-.seating-chart-area{
+.seating-chart-area {
   overflow-x: scroll;
   overflow-y: scroll;
 }
 .seat-column {
   display: flex;
+}
+.seat-row {
+  display: flex;
+}
+.ml50 {
+  margin-left: 50px;
+}
+.mr50 {
+  margin-right: 50px;
 }
 </style>
