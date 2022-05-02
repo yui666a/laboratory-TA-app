@@ -1,14 +1,11 @@
 <template>
   <div class="waiting-list-section">
     <div class="waiting-list-area">
-      <!-- vue for statement -->
       <div
-        class="waiting-person"
         v-for="waiting in waitingLi"
         :key="waiting.studentId"
       >
-        <div class="waiting-person-pc"> {{ waiting.pcName }} </div>
-        <div class="waiting-person-student"> {{ waiting.studentName }}</div>
+        <WaitingPerson :waitingPerson="waiting" />
       </div>
     </div>
     <div class="hand-button-area">
@@ -18,8 +15,13 @@
 </template>
 
 <script>
+import WaitingPerson from "./WaitingPerson.vue";
+
 export default {
   name: "WaitingList",
+  components: {
+    WaitingPerson,
+  },
   data() {
     return {
       waitingLi: [
@@ -54,4 +56,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+  </style>
