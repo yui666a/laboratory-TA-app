@@ -1,20 +1,26 @@
 <template>
-  <SeatingChart />
-  <!-- TODO: remove comment after feature/004-waiting-list-design is merged -->
-  <!-- <WaitingList /> -->
+  <div class="main">
+    <SeatingChart />
+    <WaitingList />
+  </div>
 </template>
 
 <script>
 import SeatingChart from "../components/modules/SeatingChart.vue";
-// import WaitingList from "front/src/components/modules/waitingList.vue";
+import WaitingList from "../components/modules/WaitingList.vue";
 
 export default {
   name: "TopPage",
   components: {
     SeatingChart,
-    // WaitingList,
+    WaitingList,
   },
 };
 </script>
 
-<style></style>
+<style>
+.main {
+  width: 100%;
+  display: flex;
+}
+</style>

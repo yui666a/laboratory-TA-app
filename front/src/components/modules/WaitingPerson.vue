@@ -1,8 +1,10 @@
 <template>
   <div class="waiting-person">
-    <div class="waiting-person-pc">{{ waitingPerson.pcName }}</div>
+    <div>
+      <span class="waiting-person-pc">{{ waitingPerson.pcName }}</span>
+      <span class="waiting-person-time"> 00:00</span>
+    </div>
     <div class="waiting-person-student">{{ waitingPerson.studentName }}</div>
-    <div class="waiting-person-time">00:00:00</div>
   </div>
 </template>
 
@@ -18,7 +20,6 @@ export default {
 
 <style scoped>
 .waiting-person {
-  width: 200px;
   padding: 5px;
   margin: 5px;
   border: 1px solid black;

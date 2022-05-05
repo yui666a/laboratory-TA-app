@@ -60,4 +60,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.waiting-list-section {
+  width: 20%;
+}
+</style>
