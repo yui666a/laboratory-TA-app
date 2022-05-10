@@ -17,11 +17,8 @@ import javax.servlet.http.HttpSession;
 @WebServlet(urlPatterns = { "/LoginServlet" })
 public class LoginServlet extends HttpServlet {
 	
-	private static final Boolean False = null;
-
-
-	private String[] getStudentNameFromSIdAndPC(String studentId, String passCode) {
-		String realPath = this.getServletContext().getRealPath("/WEB-INF/data/studentIdTable.csv");
+	private BufferedReader FileReader(String filePath) {
+		String realPath = this.getServletContext().getRealPath(filePath);
 		FileInputStream fi = null;
 		try {
 			fi = new FileInputStream(realPath);
@@ -31,12 +28,16 @@ public class LoginServlet extends HttpServlet {
 		}
 		InputStreamReader is = new InputStreamReader(fi);
 		BufferedReader br = new BufferedReader(is);
-		
+		return br;
+	}
+	
+	private String[] getStudentNameFromSIdAndPC(String studentId, String passCode) {
+		//ファイルの読み込み
+		BufferedReader br = FileReader("/WEB-INF/data/studentIdTable.csv");
 		//読み込み行
 	    String line;
 	    //読み込み行数の管理
 	    int i = 0;
-	    
 	    String[] Name = new String[2];
 	    String[] tableData = new String[4];
 	    //1行ずつ読み込みを実行
@@ -60,29 +61,18 @@ public class LoginServlet extends HttpServlet {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		
 		return Name;
 	}
 	
 	private String getPcIdFromIpAddr(String addr) {
-		
-		String realPath = this.getServletContext().getRealPath("/WEB-INF/data/pcIdTable.csv");
-		FileInputStream fi = null;
-		try {
-			fi = new FileInputStream(realPath);
-		} catch (FileNotFoundException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		InputStreamReader is = new InputStreamReader(fi);
-		BufferedReader br = new BufferedReader(is);
-		
+		//ファイルの読み込み
+		BufferedReader br = FileReader("/WEB-INF/data/pcIdTable.csv");
 		//読み込み行
 	    String line;
 	    //読み込み行数の管理
 	    int i = 0;
 	    String pcId = null;
-	    String[] tableData = null;
+	    String[] tableData = new String[2];
 	    //1行ずつ読み込みを実行
 	    try {
 			while ((line = br.readLine()) != null) {
@@ -90,6 +80,7 @@ public class LoginServlet extends HttpServlet {
 			  if (i != 0) {
 			    //カンマで分割した内容を配列に格納する
 			    tableData = line.split(",");
+			    //ログインしてきたPCのIPアドレスとDB内のテーブルとの照合
 			    if(addr.equals(tableData[1])) {
 			    	pcId = tableData[0];
 			    	break;
@@ -101,9 +92,7 @@ public class LoginServlet extends HttpServlet {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		
 		return pcId;
-		
 	}
 	
 
@@ -116,39 +105,43 @@ public class LoginServlet extends HttpServlet {
 		HttpSession session = req.getSession();
 
 		// クライアントからデータを取得
-		String StudentId = req.getParameter("StudentId"); //学籍番号
-		String PassCode = req.getParameter("PassCode"); //パスワード
+		String studentId = req.getParameter("StudentId"); //学籍番号
+		String passCode = req.getParameter("PassCode"); //パスワード
 		//クライアントIPアドレスの取得
 		InetAddress cIpAddr = InetAddress.getLocalHost();
 		String clientIpAddr = cIpAddr.getHostAddress();
-
+		
+		//ログイン成否フラグ
+		Boolean addrCollationFlag = false;
+		Boolean personIdCollationFlag = false;
+		
 		//クライアントIPアドレスからPC番号を取得
-		String pcIdTable = getPcIdFromIpAddr(clientIpAddr);
-//		String pcIdTable = getPcIdFromIpAddr("133.44.118.159"); //テスト用コード (True) -> icsXXXが返ってくる
+//		String pcId = getPcIdFromIpAddr(clientIpAddr);
+		String pcId = getPcIdFromIpAddr("133.44.118.159"); //テスト用コード (True) -> icsXXXが返ってくる
 //		String pcIdTable = getPcIdFromIpAddr("127.0.0.1"); //テスト用コード (False) -> nullが返ってくる
-		if(pcIdTable != null) {
-			System.out.println(pcIdTable);
-		}else {
-			System.out.println("error!");
-		}
 		
 		//クライアントから取得したデータから学生氏名を取得
-		String[] studentName = getStudentNameFromSIdAndPC(StudentId, PassCode); 
-//		String[] studentName = getStudentNameFromSIdAndPC("18336787", ""); //ユーザ用アカウント
-//		String[] studentName = getStudentNameFromSIdAndPC("12345678", "1qaz2wsx"); //TA用アカウント
-		if(studentName[0] != null) {
-			System.out.println(studentName[0]);
-			System.out.println(studentName[1]);
-		}else {
-			System.out.println("error!");
+		String[] studentName = getStudentNameFromSIdAndPC(studentId, passCode); 
+//		String[] studentName = getStudentNameFromSIdAndPC("18336787", ""); //ユーザ用アカウント(テスト用)
+//		String[] studentName = getStudentNameFromSIdAndPC("12345678", "1qaz2wsx"); //TA用アカウント(テスト用)
+		
+		//登録ipアドレスとの照合
+		if(pcId != null) addrCollationFlag = true;
+		//入力データとの照合 (姓名が両方ないとダメにする)
+		if(studentName[0] != null || studentName[1] != null) personIdCollationFlag = true;
+		
+		if(addrCollationFlag && personIdCollationFlag) {
+			// ログイン成功時の処理
+			// Sessionにユーザ名を保存
+			session.setAttribute("pcId", pcId);
+			session.setAttribute("lastName", studentName[0]);
+			session.setAttribute("firstName", studentName[1]);
+			session.setAttribute("handStatus", false);
+			
+			req.getRequestDispatcher("/output.jsp").forward(req,resp);
+		}else{
+			//ログイン失敗時の処理
+			req.getRequestDispatcher("/error.html").forward(req,resp);
 		}
-
-		// Sessionにユーザ名を保存
-		session.setAttribute("pcIdTable", pcIdTable);
-		session.setAttribute("lastName", studentName[0]);
-		session.setAttribute("firstName", studentName[1]);
-		session.setAttribute("handStatus", false);
 	}
-	
-
 }
