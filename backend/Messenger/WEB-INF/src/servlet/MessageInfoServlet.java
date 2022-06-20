@@ -32,7 +32,7 @@ public class MessageInfoServlet extends HttpServlet {
 		// 設定（文字コード、Session）
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html;charset=UTF-8");
-		HttpSession session = req.getSession
+		HttpSession session = req.getSession();
 		// <==(ブラウザ) 入力テキストの入力
 		String str = req.getParameter("LastMessageInfoRID");
 		int lastMessagInfoRID = Integer.parseInt(str);
