@@ -1,0 +1,49 @@
+#app {
+  width: 100%;
+  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
+  /* -webkit-font-smoothing: antialiased; */
+  /* -moz-osx-font-smoothing: grayscale; */
+  text-align: center;
+  color: #2c3e50;
+  /* margin-top: 60px; */
+}
+.main {
+  width: 100%;
+  display: flex;
+}
+
+
+/* seating-chart */
+.seating-chart-section{
+  width: 80%;
+}
+.seating-chart-area {
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
+.seat-column {
+  display: flex;
+}
+.seat-row {
+  display: flex;
+}
+.ml50 {
+  margin-left: 50px;
+}
+.mr50 {
+  margin-right: 50px;
+}
+
+/* seat */
+.seat-info {
+  /* TODO: 要検証 */
+  width: 5em;
+
+  margin: 3px;
+  padding: 3px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+.sign-out {
+  opacity: 0.3;
+}
