@@ -9,7 +9,7 @@
           :set="(seat = '8' + ((column - 1) * 8 + row).toString().padStart(2, '0'))"
         >
           <div
-            style="width: 8em; margin: 7px"
+            style="width: 5em; margin: 7px"
             v-if="row === 1 && column !== 2 && column !== 4 && column !== 9"
           ></div>
           <SeatInfo
@@ -22,7 +22,7 @@
             v-bind:style="[column === 9 && row === 8 ? 'display: none;' : '']"
           />
           <div
-            style="width: 8em; margin: 7px"
+            style="width: 5em; margin: 7px"
             v-if="row === 1 && (column === 2 || column === 4)"
           ></div>
         </div>
@@ -80,6 +80,9 @@ export default {
 </script>
 
 <style scoped>
+.seating-chart-section{
+  width: 80%;
+}
 .seating-chart-area {
   overflow-x: scroll;
   overflow-y: scroll;

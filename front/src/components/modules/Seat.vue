@@ -24,14 +24,14 @@ export default {
 <style scoped>
 .seat-info {
   /* TODO: 要検証 */
-  width: 8em;
+  width: 5em;
 
   margin: 3px;
-  padding:3px;
+  padding: 3px;
   border: 1px solid black;
   border-radius: 5px;
 }
-.sign-out{
+.sign-out {
   opacity: 0.3;
 }
 </style>
