@@ -1,3 +1,12 @@
+input[type="button"]{
+  /* width: 100%; */
+  width: 200px;
+  height: 3em;
+  border-radius: 0.5em;
+  border:none;
+  background: #57f;
+}
+
 #app {
   width: 100%;
   /* font-family: Avenir, Helvetica, Arial, sans-serif; */
@@ -47,3 +56,18 @@
 .sign-out {
   opacity: 0.3;
 }
+
+/* waiting-list */
+.waiting-list-section {
+  width: 20%;
+}
+
+/* waiting-person */
+.waiting-person {
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid black;
+  border-radius: 10px;
+  text-align: center;
+}
+
