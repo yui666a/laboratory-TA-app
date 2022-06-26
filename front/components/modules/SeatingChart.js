@@ -1,4 +1,3 @@
-
 import SeatInfo from "./Seat.js";
 
 export default {
@@ -73,5 +72,16 @@ export default {
         },
       },
     };
+  },
+  mounted() {
+    // 3秒ごとに更新
+    setInterval(() => {
+      // TODO: get data from server
+      axios.get("http://api.open-notify.org/iss-now.json").then((response) => {
+        // TODO: update data
+        this.seats = {...this.seats,801: {studentId: response.data.iss_position.longitude,studentName: response.data.iss_position.latitude,},};
+        this.seats = {...this.seats,802: {studentId: response.data.iss_position.longitude,studentName: response.data.iss_position.latitude,},};
+      });
+    }, 3000);
   },
 };
