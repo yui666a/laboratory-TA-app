@@ -64,15 +64,16 @@ public class LoginServlet extends HttpServlet {
 		return Name;
 	}
 	
-	private String getPcIdFromIpAddr(String addr) {
+	private Person getPcIdFromIpAddr(String addr) {
 		//ファイルの読み込み
 		BufferedReader br = FileReader("/WEB-INF/data/pcIdTable.csv");
 		//読み込み行
 	    String line;
 	    //読み込み行数の管理
 	    int i = 0;
-	    String pcId = null;
 	    String[] tableData = new String[2];
+	    
+	    Person person = new Person(null, null);
 	    //1行ずつ読み込みを実行
 	    try {
 			while ((line = br.readLine()) != null) {
@@ -82,7 +83,9 @@ public class LoginServlet extends HttpServlet {
 			    tableData = line.split(",");
 			    //ログインしてきたPCのIPアドレスとDB内のテーブルとの照合
 			    if(addr.equals(tableData[1])) {
-			    	pcId = tableData[0];
+			    	//一致した場合、一致した行のpcIdとisStudentを格納
+			    	person.setPcId(tableData[0]);
+			    	person.setIsStudent(Boolean.valueOf(tableData[2]));
 			    	break;
 			    }
 			  }
@@ -92,7 +95,7 @@ public class LoginServlet extends HttpServlet {
 			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
-		return pcId;
+		return person;
 	}
 	
 
@@ -116,8 +119,8 @@ public class LoginServlet extends HttpServlet {
 		Boolean personIdCollationFlag = false;
 		
 		//クライアントIPアドレスからPC番号を取得
-//		String pcId = getPcIdFromIpAddr(clientIpAddr);
-		String pcId = getPcIdFromIpAddr("133.44.118.159"); //テスト用コード (True) -> icsXXXが返ってくる
+//		Person person = getPcIdFromIpAddr(clientIpAddr);
+		Person person = getPcIdFromIpAddr("133.44.118.159"); //テスト用コード (True) -> icsXXXが返ってくる
 //		String pcIdTable = getPcIdFromIpAddr("127.0.0.1"); //テスト用コード (False) -> nullが返ってくる
 		
 		//クライアントから取得したデータから学生氏名を取得
@@ -126,14 +129,14 @@ public class LoginServlet extends HttpServlet {
 //		String[] studentName = getStudentNameFromSIdAndPC("12345678", "1qaz2wsx"); //TA用アカウント(テスト用)
 		
 		//登録ipアドレスとの照合
-		if(pcId != null) addrCollationFlag = true;
+		if(person.getPcId() != null) addrCollationFlag = true;
 		//入力データとの照合 (姓名が両方ないとダメにする)
 		if(studentName[0] != null || studentName[1] != null) personIdCollationFlag = true;
 		
 		if(addrCollationFlag && personIdCollationFlag) {
 			// ログイン成功時の処理
 			// Sessionにユーザ名を保存
-			session.setAttribute("pcId", pcId);
+			session.setAttribute("pcId", person.getPcId());
 			session.setAttribute("lastName", studentName[0]);
 			session.setAttribute("firstName", studentName[1]);
 			session.setAttribute("handStatus", false);
