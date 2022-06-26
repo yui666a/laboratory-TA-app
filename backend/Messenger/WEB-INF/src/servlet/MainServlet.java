@@ -27,6 +27,6 @@ public class MainServlet extends HttpServlet {
 		}
 
 		// クライアントに送信
-		req.getRequestDispatcher("/output.jsp").forward(req,resp);
+		req.getRequestDispatcher("/output_student.jsp").forward(req,resp);
 	}
 }
