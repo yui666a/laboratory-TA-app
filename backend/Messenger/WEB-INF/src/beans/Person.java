@@ -1,10 +1,10 @@
-package servlet;
+package beans;
 
 public class Person {
 	protected String pcId;
 	protected Boolean isStudent = null;
 	
-	Person(String pId, Boolean isS){
+	public Person(String pId, Boolean isS){
 		this.pcId = pId;
 		this.isStudent = isS;
 	}

@@ -13,6 +13,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import beans.Person;
+
 @WebServlet(urlPatterns = { "/LoginServlet" })
 public class LoginServlet extends HttpServlet {
 	
