@@ -137,6 +137,7 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("lastName", studentName[0]);
 			session.setAttribute("firstName", studentName[1]);
 			session.setAttribute("handStatus", false);
+			session.setAttribute("helpStatus", false);
 			
 			req.getRequestDispatcher("/output.jsp").forward(req,resp);
 		}else{
