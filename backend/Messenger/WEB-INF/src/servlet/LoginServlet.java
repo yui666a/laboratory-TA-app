@@ -31,39 +31,39 @@ public class LoginServlet extends HttpServlet {
 		BufferedReader br = new BufferedReader(is);
 		return br;
 	}
-	
-	private String[] getStudentNameFromSIdAndPC(String studentId, String passCode) {
-		//ファイルの読み込み
-		BufferedReader br = FileReader("/WEB-INF/data/studentIdTable.csv");
-		//読み込み行
-	    String line;
-	    //読み込み行数の管理
-	    int i = 0;
-	    String[] Name = new String[2];
-	    String[] tableData = new String[4];
-	    //1行ずつ読み込みを実行
-	    try {
-			while ((line = br.readLine()) != null) {
-			  //先頭行は列名
-			  if (i != 0) {
-			    //カンマで分割した内容を配列に格納する
-			    tableData = line.split(",");
-			    if(studentId.equals(tableData[0])) {
-			    	if(passCode.equals(tableData[1])) {
-			    		Name[0] = tableData[2];
-			    		Name[1] = tableData[3];
-			    		break;
-			    	}
-			    }
-			  }
-			  i++;
-			}
-		} catch (IOException e) {
-			// TODO 自動生成された catch ブロック
-			e.printStackTrace();
-		}
-		return Name;
-	}
+//	
+//	private String[] getStudentNameFromSIdAndPC(String studentId, String passCode) {
+//		//ファイルの読み込み
+//		BufferedReader br = FileReader("/WEB-INF/data/studentIdTable.csv");
+//		//読み込み行
+//	    String line;
+//	    //読み込み行数の管理
+//	    int i = 0;
+//	    String[] Name = new String[2];
+//	    String[] tableData = new String[4];
+//	    //1行ずつ読み込みを実行
+//	    try {
+//			while ((line = br.readLine()) != null) {
+//			  //先頭行は列名
+//			  if (i != 0) {
+//			    //カンマで分割した内容を配列に格納する
+//			    tableData = line.split(",");
+//			    if(studentId.equals(tableData[0])) {
+//			    	if(passCode.equals(tableData[1])) {
+//			    		Name[0] = tableData[2];
+//			    		Name[1] = tableData[3];
+//			    		break;
+//			    	}
+//			    }
+//			  }
+//			  i++;
+//			}
+//		} catch (IOException e) {
+//			// TODO 自動生成された catch ブロック
+//			e.printStackTrace();
+//		}
+//		return Name;
+//	}
 	
 	private Person getPcIdFromIpAddr(String addr) {
 		//ファイルの読み込み
