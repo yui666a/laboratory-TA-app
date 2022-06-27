@@ -6,16 +6,14 @@
 <meta charset="UTF-8" />
 <%
 	String pcId = (String)session.getAttribute("pcId");
-	String lastName = (String)session.getAttribute("lastName");
-	String firstName = (String)session.getAttribute("firstName");
+	Boolean isStudent = (Boolean)session.getAttribute("isStudent");
 	Boolean handStatus = (Boolean)session.getAttribute("handStatus");
 	Boolean helpStatus = (Boolean)session.getAttribute("helpStatus");
 %>
 </head>
 <body>
 	PCID：<%=pcId%> <br>
-	姓：<%=lastName%> <br>
-	名：<%=firstName%> <br>
+	学生ですか？：<%=isStudent %><br>
 	挙手状態：<%=handStatus%> <br>
 	TAヘルプ状態：<%=helpStatus%><br>
 
@@ -32,6 +30,10 @@
 			"挙手"
 		<% } %>
 		/>
+	</form>
+	
+	<form method="get" action="whoami">
+		<input type="submit" value="whoami">
 	</form>
 </body>
 </html>
