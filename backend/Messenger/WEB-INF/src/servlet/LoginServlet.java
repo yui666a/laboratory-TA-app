@@ -114,7 +114,7 @@ public class LoginServlet extends HttpServlet {
 		//クライアントIPアドレスの取得
 		//テスト用
 		String clientIpAddr = req.getParameter("pcIpAddr");
-		//本番用
+		//TODO: 本番用
 //		InetAddress cIpAddr = InetAddress.getLocalHost();
 //		String clientIpAddr = cIpAddr.getHostAddress();
 		
