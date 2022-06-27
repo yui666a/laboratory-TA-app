@@ -143,15 +143,7 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("handStatus", false);
 			session.setAttribute("helpStatus", false);
 			
-			//学生用とTA教員用を分けてページ遷移させる
-			if(person.getIsStudent()) {
-				//学生用ページ遷移
-				req.getRequestDispatcher("/output_student.jsp").forward(req,resp);
-			}else {
-				//TA教員用ページ遷移
-				req.getRequestDispatcher("/output_teacher.jsp").forward(req,resp);
-			}
-//			req.getRequestDispatcher("/output.jsp").forward(req,resp);
+			req.getRequestDispatcher("/output.jsp").forward(req,resp);
 		}else {
 //			//ログイン失敗時の処理
 			req.getRequestDispatcher("/error.html").forward(req,resp);

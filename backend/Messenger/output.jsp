@@ -12,8 +12,8 @@
 %>
 </head>
 <body>
-	<h2>学生用ページ</h2>
 	PCID：<%=pcId%> <br>
+	学生ですか？：<%=isStudent %><br>
 	挙手状態：<%=handStatus%> <br>
 	TAヘルプ状態：<%=helpStatus%><br>
 
@@ -30,6 +30,10 @@
 			"挙手"
 		<% } %>
 		/>
+	</form>
+	
+	<form method="get" action="whoami">
+		<input type="submit" value="whoami">
 	</form>
 </body>
 </html>
