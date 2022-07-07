@@ -143,6 +143,8 @@ public class LoginServlet extends HttpServlet {
 			session.setAttribute("handStatus", false);
 			session.setAttribute("helpStatus", false);
 			
+			System.out.println(StartTest.pcIdTable[0][1]);
+			
 			req.getRequestDispatcher("/output.jsp").forward(req,resp);
 		}else {
 //			//ログイン失敗時の処理
