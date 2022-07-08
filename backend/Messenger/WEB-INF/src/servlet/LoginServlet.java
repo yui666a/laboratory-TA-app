@@ -44,7 +44,7 @@ public class LoginServlet extends HttpServlet {
 		//ログイン成否フラグ
 		Boolean addrCollationFlag = false;
 		
-		//クライアントIPアドレスからPC番号を取得
+		//クライアントIPアドレスからPC情報を取得
 		Pc pc = getPcFromIpAddr(clientIpAddr);
 //		Person person = getPcIdFromIpAddr("133.44.118.182"); //テスト用コード (True) -> icsXXXが返ってくる
 //		String pcIdTable = getPcIdFromIpAddr("127.0.0.1"); //テスト用コード (False) -> nullが返ってくる
@@ -56,7 +56,7 @@ public class LoginServlet extends HttpServlet {
 		if(addrCollationFlag) {
 //			// ログイン成功時の処理
 			StartServlet.setLogin(pc.getPcId(), true);
-//			// Sessionにユーザ名を保存
+//			// Requestにユーザ名を保存
 			req.setAttribute("pcIpAddress", pc.getIpAdress());
 			req.setAttribute("pcId", pc.getPcId());
 			req.setAttribute("handStatus", pc.getHandStatus());
