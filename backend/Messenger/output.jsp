@@ -5,15 +5,15 @@
 <head>
 <meta charset="UTF-8" />
 <%
-	String pcId = (String)session.getAttribute("pcId");
-	Boolean isStudent = (Boolean)session.getAttribute("isStudent");
-	Boolean handStatus = (Boolean)session.getAttribute("handStatus");
-	Boolean helpStatus = (Boolean)session.getAttribute("helpStatus");
+	String pcIpAddress = (String)request.getAttribute("pcIpAddress");
+	String pcId = (String)request.getAttribute("pcId");
+	Boolean handStatus = (Boolean)request.getAttribute("handStatus");
+	Boolean helpStatus = (Boolean)request.getAttribute("helpStatus");
 %>
 </head>
 <body>
+	IPAddress：<%=pcIpAddress %><br>
 	PCID：<%=pcId%> <br>
-	学生ですか？：<%=isStudent %><br>
 	挙手状態：<%=handStatus%> <br>
 	TAヘルプ状態：<%=helpStatus%><br>
 
