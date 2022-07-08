@@ -6,7 +6,10 @@
 <meta charset="UTF-8" />
 <%
 	String pcIpAddress = (String)request.getAttribute("pcIpAddress");
-	String pcId = (String)request.getAttribute("pcId");
+	String pcIdwithICS = (String)request.getAttribute("pcId");
+	int beginIdx = pcIdwithICS.indexOf("8");
+	String pcId = pcIdwithICS.substring(beginIdx);
+	
 	Boolean handStatus = (Boolean)request.getAttribute("handStatus");
 	Boolean helpStatus = (Boolean)request.getAttribute("helpStatus");
 %>
@@ -21,19 +24,15 @@
 	<script type="text/javascript" src="vue-router@3.5.3.js"></script>
 	<script type="text/javascript" src="vue@3.1.5.js"></script>
 	
-	<form method="get" action="MainServlet">
-		<div>挙手テスト</div>
-		<input type="submit" value=
-		<% if(handStatus){ %>
-			"解決済"
-		<% }else{ %>
-			"挙手"
-		<% } %>
-		/>
+	<form method="get" action="/Messenger/whoami">
+		<input type="submit" value="whoami">
 	</form>
 	
-	<form method="get" action="whoami">
-		<input type="submit" value="whoami">
+	<form method="get" action="/Messenger/active-seats">
+		<input type="submit" value="active-seats">
+	</form>
+	<form method="post" action="/Messenger/call/<%=pcId%>">
+		<input type="submit" value="call-teacher">
 	</form>
 </body>
 </html>
