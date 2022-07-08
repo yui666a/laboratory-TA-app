@@ -28,7 +28,7 @@ public class StartServlet implements ServletContextListener {
 		List<Pc> pcList = StartServlet.getPcList();
 		int i=0;
 		for(Pc pc : pcList) {
-			if(pcId == pc.getPcId()) {
+			if(pcId.equals(pc.getPcId())) {
 				Pc pcTmp = new Pc();
 				pcTmp = pc;
 				pcTmp.setIsLogin(b);
@@ -39,10 +39,11 @@ public class StartServlet implements ServletContextListener {
 		}
 	}
     public static void setHandStatus(String pcId, boolean b) {
+    	System.out.println(pcId);
 		List<Pc> pcList = StartServlet.getPcList();
 		int i=0;
 		for(Pc pc : pcList) {
-			if(pcId == pc.getPcId()) {
+			if(pcId.equals(pc.getPcId())) {
 				Pc pcTmp = new Pc();
 				pcTmp = pc;
 				pcTmp.setHandStatus(b);
@@ -56,7 +57,7 @@ public class StartServlet implements ServletContextListener {
 		List<Pc> pcList = StartServlet.getPcList();
 		int i=0;
 		for(Pc pc : pcList) {
-			if(pcId == pc.getPcId()) {
+			if(pcId.equals(pc.getPcId())) {
 				Pc pcTmp = new Pc();
 				pcTmp = pc;
 				pcTmp.setHelpStatus(b);
