@@ -17,8 +17,6 @@ public class call extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
 		
-		System.out.println("call");
-		
 		String url = req.getRequestURI();
 		int beginIdx = url.indexOf("8");
 		String myPcId = url.substring(beginIdx);
