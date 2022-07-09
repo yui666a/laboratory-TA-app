@@ -1,13 +1,15 @@
 package beans;
 
 public class Pc {
-	protected String pcId = null;
-	protected String ipAdress = null;
-	protected Boolean isStudent = null;
-	protected Boolean isLogin = null;
-	protected Boolean handStatus = null;
-	protected Boolean helpStatus = null;
 	
+	protected String pcId = null; //icsXXX
+	protected String ipAdress = null; //ドメインは133.44.118.158-228の間
+	protected Boolean isStudent = null; // true:学生が利用するPC, false:TA,教員が利用するPC
+	protected Boolean isLogin = null; // true:ログイン中, false:未ログイン
+	protected Boolean handStatus = null; // true:挙手をしている状態, false:挙手をしていない状態
+	protected Boolean helpStatus = null; // true:TA教員ヘルプ中, false:ヘルプしていない (*この変数はまだ利用していない)
+	
+	//--------アクセッサ関係-------------------------------------------------
 	public Boolean getHandStatus() {
 		return handStatus;
 	}

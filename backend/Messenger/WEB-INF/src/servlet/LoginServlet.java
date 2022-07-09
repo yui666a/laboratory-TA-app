@@ -13,19 +13,6 @@ import beans.Pc;
 
 @WebServlet(urlPatterns = { "/LoginServlet" })
 public class LoginServlet extends HttpServlet {
-	
-	private Pc getPcFromIpAddr(String addr) {
-		
-		List<Pc> pcList = StartServlet.getPcList();
-		for(Pc pc : pcList) {
-			if(addr.equals(pc.getIpAdress())) {
-				return pc;	
-			}
-					
-		}
-		return null;
-	}
-	
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -41,22 +28,19 @@ public class LoginServlet extends HttpServlet {
 //		InetAddress cIpAddr = InetAddress.getLocalHost();
 //		String clientIpAddr = cIpAddr.getHostAddress();
 		
-		//ログイン成否フラグ
-		Boolean addrCollationFlag = false;
-		
-		//クライアントIPアドレスからPC情報を取得
+		//ipアドレスからPC情報を取得
 		Pc pc = getPcFromIpAddr(clientIpAddr);
-//		Person person = getPcIdFromIpAddr("133.44.118.182"); //テスト用コード (True) -> icsXXXが返ってくる
-//		String pcIdTable = getPcIdFromIpAddr("127.0.0.1"); //テスト用コード (False) -> nullが返ってくる
 		
-		
-		//ipアドレスから登録情報を取得できたか
+		//ipアドレスからpc情報を取得できたか
+		Boolean addrCollationFlag = false; //ログイン成否フラグ
 		if(pc != null) addrCollationFlag = true;
 		
 		if(addrCollationFlag) {
 //			// ログイン成功時の処理
+			
+			//ログイン中に変更
 			StartServlet.setLogin(pc.getPcId(), true);
-//			// Requestにユーザ名を保存
+//			// Requestにpcデータを保存
 			req.setAttribute("pcIpAddress", pc.getIpAdress());
 			req.setAttribute("pcId", pc.getPcId());
 			req.setAttribute("handStatus", pc.getHandStatus());
@@ -67,5 +51,17 @@ public class LoginServlet extends HttpServlet {
 //			//ログイン失敗時の処理
 			req.getRequestDispatcher("/error.html").forward(req,resp);
 		}
+	}
+	
+//-----------------補助関数-------------------------------------------------	
+	private Pc getPcFromIpAddr(String addr) {
+		List<Pc> pcList = StartServlet.getPcList();
+		for(Pc pc : pcList) {
+			if(addr.equals(pc.getIpAdress())) {
+				return pc;	
+			}
+					
+		}
+		return null;
 	}
 }
