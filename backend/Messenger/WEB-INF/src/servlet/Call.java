@@ -24,18 +24,18 @@ public class Call extends HttpServlet {
 		
 		//URLからpc番号を取得
 		String url = req.getRequestURI();
-		int beginIdx = url.indexOf("s"); //icsのsの位置を取得
+		int beginIdx = url.indexOf("8"); //icsのsの位置を取得
 		String myPcId = url.substring(beginIdx+1); //実際は番号だけ知りたいので+1する
 		
-		Pc pc = getPcFromPcId("ics"+myPcId);
+		Pc pc = getPcFromPcId("ics8"+myPcId);
 		if(pc != null) {
 			
 			//現在の挙手状態を取得
 			boolean preHandStatus = pc.getHandStatus();
 			
 			//現在の挙手状態を反転
-			if(preHandStatus) StartServlet.setHandStatus("ics"+myPcId, false);
-			else StartServlet.setHandStatus("ics"+myPcId, true);
+			if(preHandStatus) StartServlet.setHandStatus("ics8"+myPcId, false);
+			else StartServlet.setHandStatus("ics8"+myPcId, true);
 			
 			// Requestに各種データを保存
 			req.setAttribute("pcIpAddress", pc.getIpAdress());
