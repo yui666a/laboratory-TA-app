@@ -39,38 +39,7 @@ export default {
   data() {
     return {
       // sample data
-      seats: {
-        801: {
-          pcName: "ics801",
-          studentId: "123456",
-          studentName: "まつもと ただのぶ",
-        },
-        802: {
-          pcName: "ics802",
-          studentId: "123457",
-          studentName: "あいそ",
-        },
-        803: {
-          pcName: "ics801",
-          studentId: "123456",
-          studentName: "まつもと ただのぶ",
-        },
-        804: {
-          pcName: "ics802",
-          studentId: "123457",
-          studentName: "あいそ",
-        },
-        805: {
-          pcName: "ics801",
-          studentId: "123456",
-          studentName: "まつもと ただのぶ",
-        },
-        870: {
-          pcName: "ics802",
-          studentId: "123457",
-          studentName: "あいそ",
-        },
-      },
+      seats: {},
     };
   },
   mounted() {
@@ -78,10 +47,12 @@ export default {
     setInterval(() => {
       axios.get("/Messenger/v1/active-seats").then((response) => {
         let activeSeats = response.data.filter((seat) =>
-          // TODO: change isStudent to isLogin
-          !seat.isStudent
+            // TODO: change isStudent to isLogin
+            !seat.isStudent
         );
-        console.log(activeSeats);
+        activeSeats.map((seat) => {
+          this.seats = { ...this.seats, [seat.pcId.substring(3)]: seat };
+        });
       });
     }, 3000);
   },
