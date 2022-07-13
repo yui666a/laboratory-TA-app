@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -8,6 +9,9 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Pc;
 
@@ -43,17 +47,33 @@ public class Call extends HttpServlet {
 //			req.setAttribute("pcId", pc.getPcId());
 //			req.setAttribute("handStatus", pc.getHandStatus());
 //			req.setAttribute("helpStatus", pc.getHelpStatus());
+//			req.getRequestDispatcher("/index.html").forward(req,resp);
 			
+			//pcListをJsonに変換
+			String jsonList = "";
+			List<Pc> pcList = StartServlet.getPcList();
+			jsonList = getJsonList(pcList);
 			
-			req.getRequestDispatcher("/index.html").forward(req,resp);
+			// JSON形式のメッセージリストを出力
+			PrintWriter out = resp.getWriter();
+			out.println(jsonList);
 			
 		} else {
 			req.getRequestDispatcher("/error.html").forward(req,resp);
 		}
 	}
 
-
-//-------------補助関数---------------------------------------------
+	//---------------補助関数-----------------------------------------------------
+	private String getJsonList(List<Pc> pcList) throws JsonProcessingException{
+		String jsonList = "";
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			jsonList = mapper.writeValueAsString(pcList);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return jsonList;
+	}
 	private Pc getPcFromPcId(String pcId) {
 		List<Pc> pcList = StartServlet.getPcList();
 		for(Pc pc : pcList) {
