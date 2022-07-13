@@ -45,7 +45,7 @@ public class LoginServlet extends HttpServlet {
 //			req.setAttribute("handStatus", pc.getHandStatus());
 //			req.setAttribute("helpStatus", pc.getHelpStatus());
 			
-			req.getRequestDispatcher("/index.jsp").forward(req,resp);
+			req.getRequestDispatcher("/index.html").forward(req,resp);
 		}else{
 //			//ログイン失敗時の処理
 			req.getRequestDispatcher("/error.html").forward(req,resp);

@@ -46,8 +46,8 @@ public class WhoamI extends HttpServlet {
 //		req.setAttribute("handStatus", pc.getHandStatus());
 //		req.setAttribute("helpStatus", pc.getHelpStatus());
 //		req.setAttribute("myPc", jsonList.toString());
-		
-		req.getRequestDispatcher("/index.jsp").forward(req,resp);
+//		
+//		req.getRequestDispatcher("/index.html").forward(req,resp);
 		
 
 	}
