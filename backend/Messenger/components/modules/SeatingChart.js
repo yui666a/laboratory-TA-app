@@ -1,4 +1,3 @@
-
 import SeatInfo from "./Seat.js";
 
 export default {
@@ -73,5 +72,17 @@ export default {
         },
       },
     };
+  },
+  mounted() {
+    // 3秒ごとに更新
+    setInterval(() => {
+      axios.get("/Messenger/v1/active-seats").then((response) => {
+        let activeSeats = response.data.filter((seat) =>
+          // TODO: change isStudent to isLogin
+          !seat.isStudent
+        );
+        console.log(activeSeats);
+      });
+    }, 3000);
   },
 };
