@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,7 +28,7 @@ public class LoginServlet extends HttpServlet {
 //		String clientIpAddr = cIpAddr.getHostAddress();
 		
 		//ipアドレスからPC情報を取得
-		Pc pc = getPcFromIpAddr(clientIpAddr);
+		Pc pc = StartServlet.getPcFromIpAddr(clientIpAddr);
 		
 		//ipアドレスからpc情報を取得できたか
 		Boolean addrCollationFlag = false; //ログイン成否フラグ
@@ -54,14 +53,4 @@ public class LoginServlet extends HttpServlet {
 	}
 	
 //-----------------補助関数-------------------------------------------------	
-	private Pc getPcFromIpAddr(String addr) {
-		List<Pc> pcList = StartServlet.getPcList();
-		for(Pc pc : pcList) {
-			if(addr.equals(pc.getIpAdress())) {
-				return pc;	
-			}
-					
-		}
-		return null;
-	}
 }
