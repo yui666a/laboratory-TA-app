@@ -24,7 +24,8 @@ public class Call extends HttpServlet {
 		
 		//URLからpc番号を取得
 		String url = req.getRequestURI();
-		int beginIdx = url.indexOf("s"); //icsのsの位置を取得
+
+		int beginIdx = url.lastIndexOf("/"); //icsのsの位置を取得
 		String myPcId = url.substring(beginIdx+1); //実際は番号だけ知りたいので+1する
 		
 		Pc pc = getPcFromPcId("ics"+myPcId);
