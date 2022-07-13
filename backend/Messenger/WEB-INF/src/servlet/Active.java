@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Pc;
 
-@WebServlet(urlPatterns = { "/active-seats" })
+@WebServlet(urlPatterns = { "/v1/active-seats" })
 //active-seatsの応答関数
 public class Active extends HttpServlet {
 	
@@ -30,10 +30,20 @@ public class Active extends HttpServlet {
 		String jsonList = "";
 		List<Pc> pcList = StartServlet.getPcList();
 		jsonList = getJsonList(pcList);
-
+		
 		// JSON形式のメッセージリストを出力
 		PrintWriter out = resp.getWriter();
 		out.println(jsonList);
+		
+//		Pc pc = StartServlet.getPcFromIpAddr("133.44.118.191");
+//		
+//		req.setAttribute("pcIpAddress", pc.getIpAdress());
+//		req.setAttribute("pcId", pc.getPcId());
+//		req.setAttribute("handStatus", pc.getHandStatus());
+//		req.setAttribute("helpStatus", pc.getHelpStatus());
+//		req.setAttribute("pcList", jsonList.toString());
+//		
+//		req.getRequestDispatcher("/index.html").forward(req,resp);
 	}
 
 

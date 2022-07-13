@@ -15,7 +15,9 @@ public class Pc {
 	}
 	public void setHandStatus(Boolean handStatus) {
 		this.handStatus = handStatus;
-	}	public Boolean getHelpStatus() {
+	}	
+	
+	public Boolean getHelpStatus() {
 		return helpStatus;
 	}
 	public void setHelpStatus(Boolean helpStatus) {

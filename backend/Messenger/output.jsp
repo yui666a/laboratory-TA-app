@@ -12,6 +12,9 @@
 	
 	Boolean handStatus = (Boolean)request.getAttribute("handStatus");
 	Boolean helpStatus = (Boolean)request.getAttribute("helpStatus");
+	
+	String myPc = (String)request.getAttribute("myPc");
+	String pcList = (String)request.getAttribute("pcList");
 %>
 </head>
 <body>
@@ -24,15 +27,18 @@
 	<script type="text/javascript" src="vue-router@3.5.3.js"></script>
 	<script type="text/javascript" src="vue@3.1.5.js"></script>
 	
-	<form method="get" action="/Messenger/whoami">
+	<form method="get" action="/Messenger/v1/whoami">
 		<input type="submit" value="whoami">
 	</form>
 	
-	<form method="get" action="/Messenger/active-seats">
+	<form method="get" action="/Messenger/v1/active-seats">
 		<input type="submit" value="active-seats">
 	</form>
-	<form method="post" action="/Messenger/call/<%=pcId%>">
+	<form method="post" action="/Messenger/v1/call/<%=pcId%>">
 		<input type="submit" value="call-teacher">
 	</form>
+	
+	myPc:<%=myPc %> <br>
+	pcList:<%=pcList %>
 </body>
 </html>

@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -29,7 +28,7 @@ public class LoginServlet extends HttpServlet {
 //		String clientIpAddr = cIpAddr.getHostAddress();
 		
 		//ipアドレスからPC情報を取得
-		Pc pc = getPcFromIpAddr(clientIpAddr);
+		Pc pc = StartServlet.getPcFromIpAddr(clientIpAddr);
 		
 		//ipアドレスからpc情報を取得できたか
 		Boolean addrCollationFlag = false; //ログイン成否フラグ
@@ -41,12 +40,12 @@ public class LoginServlet extends HttpServlet {
 			//ログイン中に変更
 			StartServlet.setLogin(pc.getPcId(), true);
 //			// Requestにpcデータを保存
-			req.setAttribute("pcIpAddress", pc.getIpAdress());
-			req.setAttribute("pcId", pc.getPcId());
-			req.setAttribute("handStatus", pc.getHandStatus());
-			req.setAttribute("helpStatus", pc.getHelpStatus());
+//			req.setAttribute("pcIpAddress", pc.getIpAdress());
+//			req.setAttribute("pcId", pc.getPcId());
+//			req.setAttribute("handStatus", pc.getHandStatus());
+//			req.setAttribute("helpStatus", pc.getHelpStatus());
 			
-			req.getRequestDispatcher("/output.jsp").forward(req,resp);
+			req.getRequestDispatcher("/index.html").forward(req,resp);
 		}else{
 //			//ログイン失敗時の処理
 			req.getRequestDispatcher("/error.html").forward(req,resp);
@@ -54,14 +53,4 @@ public class LoginServlet extends HttpServlet {
 	}
 	
 //-----------------補助関数-------------------------------------------------	
-	private Pc getPcFromIpAddr(String addr) {
-		List<Pc> pcList = StartServlet.getPcList();
-		for(Pc pc : pcList) {
-			if(addr.equals(pc.getIpAdress())) {
-				return pc;	
-			}
-					
-		}
-		return null;
-	}
 }
