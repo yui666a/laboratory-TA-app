@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import beans.Pc;
 
-@WebServlet(urlPatterns = { "/call/*" })
+@WebServlet(urlPatterns = { "/v1/call/*" })
 //call-teacher/XXXの応答関数
 public class Call extends HttpServlet {
 	
@@ -37,14 +37,16 @@ public class Call extends HttpServlet {
 			//現在の挙手状態を反転
 			if(preHandStatus) StartServlet.setHandStatus("ics"+myPcId, false);
 			else StartServlet.setHandStatus("ics"+myPcId, true);
-			
+
 			// Requestに各種データを保存
 			req.setAttribute("pcIpAddress", pc.getIpAdress());
 			req.setAttribute("pcId", pc.getPcId());
 			req.setAttribute("handStatus", pc.getHandStatus());
 			req.setAttribute("helpStatus", pc.getHelpStatus());
 			
+			
 			req.getRequestDispatcher("/output.jsp").forward(req,resp);
+			
 		} else {
 			req.getRequestDispatcher("/error.html").forward(req,resp);
 		}
