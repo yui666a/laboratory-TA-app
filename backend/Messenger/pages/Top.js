@@ -13,4 +13,11 @@ export default {
     <WaitingList />
   </div>
 `,
+  mounted: function () {
+    // pcIdをsessionStorageに保存
+    axios.get("/Messenger/v1/whoami").then((response) => {
+      const pcId = response.data.pcId;
+      sessionStorage.setItem("pcId", pcId);
+    });
+  },
 };
