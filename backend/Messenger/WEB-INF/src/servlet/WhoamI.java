@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -36,11 +37,15 @@ public class WhoamI extends HttpServlet {
 		// メッセージリストをJSON形式のメッセージリストに変換
 		String jsonList = getJsonList(pc);
 		
-		req.setAttribute("pcIpAddress", pc.getIpAdress());
-		req.setAttribute("pcId", pc.getPcId());
-		req.setAttribute("handStatus", pc.getHandStatus());
-		req.setAttribute("helpStatus", pc.getHelpStatus());
-		req.setAttribute("myPc", jsonList.toString());
+		// JSON形式のメッセージリストを出力
+		PrintWriter out = resp.getWriter();
+		out.println(jsonList);
+		
+//		req.setAttribute("pcIpAddress", pc.getIpAdress());
+//		req.setAttribute("pcId", pc.getPcId());
+//		req.setAttribute("handStatus", pc.getHandStatus());
+//		req.setAttribute("helpStatus", pc.getHelpStatus());
+//		req.setAttribute("myPc", jsonList.toString());
 		
 		req.getRequestDispatcher("/index.jsp").forward(req,resp);
 		
