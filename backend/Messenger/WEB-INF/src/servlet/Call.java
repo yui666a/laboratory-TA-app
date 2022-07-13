@@ -39,10 +39,10 @@ public class Call extends HttpServlet {
 			else StartServlet.setHandStatus("ics"+myPcId, true);
 
 			// Requestに各種データを保存
-			req.setAttribute("pcIpAddress", pc.getIpAdress());
-			req.setAttribute("pcId", pc.getPcId());
-			req.setAttribute("handStatus", pc.getHandStatus());
-			req.setAttribute("helpStatus", pc.getHelpStatus());
+//			req.setAttribute("pcIpAddress", pc.getIpAdress());
+//			req.setAttribute("pcId", pc.getPcId());
+//			req.setAttribute("handStatus", pc.getHandStatus());
+//			req.setAttribute("helpStatus", pc.getHelpStatus());
 			
 			
 			req.getRequestDispatcher("/index.html").forward(req,resp);

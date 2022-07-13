@@ -40,12 +40,12 @@ public class LoginServlet extends HttpServlet {
 			//ログイン中に変更
 			StartServlet.setLogin(pc.getPcId(), true);
 //			// Requestにpcデータを保存
-			req.setAttribute("pcIpAddress", pc.getIpAdress());
-			req.setAttribute("pcId", pc.getPcId());
-			req.setAttribute("handStatus", pc.getHandStatus());
-			req.setAttribute("helpStatus", pc.getHelpStatus());
+//			req.setAttribute("pcIpAddress", pc.getIpAdress());
+//			req.setAttribute("pcId", pc.getPcId());
+//			req.setAttribute("handStatus", pc.getHandStatus());
+//			req.setAttribute("helpStatus", pc.getHelpStatus());
 			
-			req.getRequestDispatcher("/index.html").forward(req,resp);
+			req.getRequestDispatcher("/index.jsp").forward(req,resp);
 		}else{
 //			//ログイン失敗時の処理
 			req.getRequestDispatcher("/error.html").forward(req,resp);
