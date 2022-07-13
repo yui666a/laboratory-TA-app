@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -9,9 +10,12 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import beans.Pc;
 
-@WebServlet(urlPatterns = { "/call/*" })
+@WebServlet(urlPatterns = { "/v1/call/*" })
 //call-teacher/XXXの応答関数
 public class Call extends HttpServlet {
 	
@@ -37,21 +41,39 @@ public class Call extends HttpServlet {
 			//現在の挙手状態を反転
 			if(preHandStatus) StartServlet.setHandStatus("ics"+myPcId, false);
 			else StartServlet.setHandStatus("ics"+myPcId, true);
-			
+
 			// Requestに各種データを保存
-			req.setAttribute("pcIpAddress", pc.getIpAdress());
-			req.setAttribute("pcId", pc.getPcId());
-			req.setAttribute("handStatus", pc.getHandStatus());
-			req.setAttribute("helpStatus", pc.getHelpStatus());
+//			req.setAttribute("pcIpAddress", pc.getIpAdress());
+//			req.setAttribute("pcId", pc.getPcId());
+//			req.setAttribute("handStatus", pc.getHandStatus());
+//			req.setAttribute("helpStatus", pc.getHelpStatus());
+//			req.getRequestDispatcher("/index.html").forward(req,resp);
 			
-			req.getRequestDispatcher("/output.jsp").forward(req,resp);
+			//pcListをJsonに変換
+			String jsonList = "";
+			List<Pc> pcList = StartServlet.getPcList();
+			jsonList = getJsonList(pcList);
+			
+			// JSON形式のメッセージリストを出力
+			PrintWriter out = resp.getWriter();
+			out.println(jsonList);
+			
 		} else {
 			req.getRequestDispatcher("/error.html").forward(req,resp);
 		}
 	}
 
-
-//-------------補助関数---------------------------------------------
+	//---------------補助関数-----------------------------------------------------
+	private String getJsonList(List<Pc> pcList) throws JsonProcessingException{
+		String jsonList = "";
+		ObjectMapper mapper = new ObjectMapper();
+		try {
+			jsonList = mapper.writeValueAsString(pcList);
+		} catch (JsonProcessingException e) {
+			e.printStackTrace();
+		}
+		return jsonList;
+	}
 	private Pc getPcFromPcId(String pcId) {
 		List<Pc> pcList = StartServlet.getPcList();
 		for(Pc pc : pcList) {

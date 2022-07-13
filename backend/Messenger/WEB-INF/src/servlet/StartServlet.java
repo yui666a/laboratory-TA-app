@@ -85,7 +85,6 @@ public class StartServlet implements ServletContextListener {
 		}
 	}
     public static void setHandStatus(String pcId, boolean b) {
-    	System.out.println(pcId);
 		List<Pc> pcList = StartServlet.getPcList();
 		int i=0;
 		for(Pc pc : pcList) {
@@ -114,6 +113,17 @@ public class StartServlet implements ServletContextListener {
 		}
     }
     
+	public static Pc getPcFromIpAddr(String addr) {
+		List<Pc> pcList = StartServlet.getPcList();
+		for(Pc pc : pcList) {
+			if(addr.equals(pc.getIpAdress())) {
+				return pc;	
+			}
+					
+		}
+		return null;
+	}
+    
 //-----------補助関数-----------------------------------------------------------------
 	private BufferedReader FileReader(String filePath, ServletContextEvent arg0) {
 		String realPath = arg0.getServletContext().getRealPath(filePath);
@@ -128,4 +138,5 @@ public class StartServlet implements ServletContextListener {
 		BufferedReader br = new BufferedReader(is);
 		return br;
 	}
+	
 }

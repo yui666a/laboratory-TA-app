@@ -15,7 +15,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Pc;
 
-@WebServlet(urlPatterns = { "/whoami" })
+@WebServlet(urlPatterns = { "/v1/whoami" })
 //whoamiの応答関数
 public class WhoamI extends HttpServlet {
 	
@@ -30,16 +30,26 @@ public class WhoamI extends HttpServlet {
 		//本番用
 //		InetAddress cIpAddr = InetAddress.getLocalHost();
 //		String clientIpAddr = cIpAddr.getHostAddress();
-//		Person person = getPcIdFromIpAddr(clientIpAddr);
+//		Pc pc = getPcIdFromIpAddr(clientIpAddr);
 		//テスト用
-		Pc pc = getPcIdFromIpAddr("133.44.118.101");
+		Pc pc = getPcFromIpAddr("133.44.118.191");
 
 		// メッセージリストをJSON形式のメッセージリストに変換
 		String jsonList = getJsonList(pc);
-
+		
 		// JSON形式のメッセージリストを出力
 		PrintWriter out = resp.getWriter();
 		out.println(jsonList);
+		
+//		req.setAttribute("pcIpAddress", pc.getIpAdress());
+//		req.setAttribute("pcId", pc.getPcId());
+//		req.setAttribute("handStatus", pc.getHandStatus());
+//		req.setAttribute("helpStatus", pc.getHelpStatus());
+//		req.setAttribute("myPc", jsonList.toString());
+//		
+//		req.getRequestDispatcher("/index.html").forward(req,resp);
+		
+
 	}
 
 	//---------------補助関数-----------------------------------------------------
@@ -54,7 +64,7 @@ public class WhoamI extends HttpServlet {
 		}
 		return jsonList;
 	}
-	private Pc getPcIdFromIpAddr(String addr) {
+	private Pc getPcFromIpAddr(String addr) {
 		List<Pc> pcList = StartServlet.getPcList();
 		for(Pc pc : pcList) {
 			if(addr.equals(pc.getIpAdress())) return pc;		
