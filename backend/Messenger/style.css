@@ -1,0 +1,165 @@
+input[type="button"]{
+  /* width: 100%; */
+  width: 200px;
+  height: 3em;
+  border-radius: 0.5em;
+  border:none;
+  background: #57f;
+}
+
+#app {
+  width: 100%;
+  /* font-family: Avenir, Helvetica, Arial, sans-serif; */
+  /* -webkit-font-smoothing: antialiased; */
+  /* -moz-osx-font-smoothing: grayscale; */
+  text-align: center;
+  color: #2c3e50;
+  /* margin-top: 60px; */
+}
+.main {
+  width: 100%;
+  display: flex;
+}
+
+
+/* seating-chart */
+.seating-chart-section{
+  width: 80%;
+}
+.seating-chart-area {
+  overflow-x: scroll;
+  overflow-y: scroll;
+}
+.seat-column {
+  display: flex;
+}
+.seat-row {
+  display: flex;
+}
+.ml50 {
+  margin-left: 50px;
+}
+.mr50 {
+  margin-right: 50px;
+}
+
+/* seat */
+.seat-info {
+  /* TODO: 要検証 */
+  width: 5em;
+
+  margin: 3px;
+  padding: 3px;
+  border: 1px solid black;
+  border-radius: 5px;
+}
+.sign-out {
+  opacity: 0.3;
+}
+
+/* waiting-list */
+.waiting-list-section {
+  width: 20%;
+}
+
+/* waiting-person */
+.waiting-person {
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid black;
+  border-radius: 10px;
+  text-align: center;
+}
+
+
+
+/* login-form */
+#login-form {
+  width: 280px;
+  padding: 10px;
+  border-radius: 30px;
+  box-shadow: 0 0 10px gray;
+  text-align: center;
+}
+
+.title {
+  font-size: 3rem;
+}
+
+.form {
+  text-align: start;
+  margin: 0 1rem 1rem;
+}
+
+.signin-button {
+  width: 80%;
+  font-size: 1.5em;
+  height: 2em;
+  border-radius: 1em;
+  background: rgb(29, 172, 194);
+  color: white;
+  border: none;
+}
+
+/* 以下，テキストボックスのアニメーション */
+.form {
+  position: relative;
+  width: 80%;
+  margin: 40px 3%;
+}
+
+.form input[type="text"],
+.form input[type="password"] {
+  font: 15px/24px sans-serif;
+  box-sizing: border-box;
+  width: 100%;
+  letter-spacing: 1px;
+  padding-left: 4em;
+}
+
+.form input[type="text"]:focus,
+.form input[type="password"]:focus {
+  outline: none;
+}
+
+.input-text {
+  padding: 4px 0;
+  border: 0;
+  border-bottom: 1px solid #1b2538;
+  background-color: transparent;
+}
+
+.input-text ~ .focus_line {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  transition: 0.4s;
+  background-color: rgb(29, 172, 194);
+}
+
+.input-text:focus ~ .focus_line,
+.form.input-text ~ .focus_line {
+  width: 100%;
+  transition: 0.4s;
+}
+
+.input-text ~ label {
+  position: absolute;
+  z-index: -1;
+  top: 4px;
+  left: 0;
+  width: 100%;
+  transition: 0.3s;
+  letter-spacing: 0.5px;
+  color: #aaaaaa;
+}
+
+.input-text:focus ~ label,
+.form.input-text ~ label {
+  font-size: 12px;
+  top: -16px;
+  transition: 0.3s;
+  color: rgb(29, 172, 194);
+}

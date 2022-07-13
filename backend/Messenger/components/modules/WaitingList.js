@@ -19,10 +19,12 @@ export default {
   `,
   data() {
     return {
-      buttonText: "手を下ろす",
+      buttonText: "手を挙げる",
       waitingLi: [
         {
           pcName: "ics810",
+          studentId: "123456",
+          studentName: "安倍　晋三",
         },
         {
           pcName: "ics821",
