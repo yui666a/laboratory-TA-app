@@ -46,13 +46,15 @@ export default {
     // 3秒ごとに更新
     setInterval(() => {
       axios.get("/Messenger/v1/active-seats").then((response) => {
-        let activeSeats = response.data.filter((seat) =>
+        const activeSeats = response.data.filter((seat) =>
             // TODO: change isStudent to isLogin
             !seat.isStudent
         );
+        let tmpSeats = {}
         activeSeats.map((seat) => {
-          this.seats = { ...this.seats, [seat.pcId.substring(3)]: seat };
+          tmpSeats = { ...tmpSeats, [seat.pcId.substring(3)]: seat };
         });
+        this.seats = tmpSeats;
       });
     }, 3000);
   },
