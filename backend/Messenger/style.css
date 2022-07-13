@@ -62,6 +62,11 @@ input[type="button"]{
   width: 20%;
 }
 
+.waiting-list-button-area {
+  position: fixed;
+  bottom: 1rem;
+}
+
 /* waiting-person */
 .waiting-person {
   padding: 5px;

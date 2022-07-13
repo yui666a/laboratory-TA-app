@@ -14,7 +14,9 @@ export default {
           <WaitingPerson :waitingPerson="waiting" />
         </div>
       </div>
-      <Button :value="buttonText" :onClick="onClickHandButton" />
+      <div class="waiting-list-button-area">
+        <Button :value="buttonText" :onClick="onClickHandButton" />
+      </div>
     </div>
   `,
   data() {
@@ -51,8 +53,8 @@ export default {
   },
   methods: {
     onClickHandButton() {
-      // TODO: implement me
-      console.log("button was clicked");
+      const pcId = sessionStorage.getItem("pcId");
+      axios.post("/Messenger/v1/call/" + pcId.substring(3)).then((response) => {});
     },
   },
 };

@@ -14,7 +14,10 @@ export default {
   </div>
 `,
   mounted: function () {
-    // pcIdをsessionStorageに保存
+    /**
+     * pcIdをsessionStorageに保存
+     * TODO: pcIdを取得できなかった場合の処理を追加
+     */
     axios.get("/Messenger/v1/whoami").then((response) => {
       const pcId = response.data.pcId;
       sessionStorage.setItem("pcId", pcId);
