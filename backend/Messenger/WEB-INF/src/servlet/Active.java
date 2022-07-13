@@ -39,7 +39,7 @@ public class Active extends HttpServlet {
 		req.setAttribute("helpStatus", pc.getHelpStatus());
 		req.setAttribute("pcList", jsonList.toString());
 		
-		req.getRequestDispatcher("/output.jsp").forward(req,resp);
+		req.getRequestDispatcher("/index.html").forward(req,resp);
 	}
 
 

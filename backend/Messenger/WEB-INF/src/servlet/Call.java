@@ -45,7 +45,7 @@ public class Call extends HttpServlet {
 			req.setAttribute("helpStatus", pc.getHelpStatus());
 			
 			
-			req.getRequestDispatcher("/output.jsp").forward(req,resp);
+			req.getRequestDispatcher("/index.html").forward(req,resp);
 			
 		} else {
 			req.getRequestDispatcher("/error.html").forward(req,resp);

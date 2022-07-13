@@ -42,7 +42,7 @@ public class WhoamI extends HttpServlet {
 		req.setAttribute("helpStatus", pc.getHelpStatus());
 		req.setAttribute("myPc", jsonList.toString());
 		
-		req.getRequestDispatcher("/output.jsp").forward(req,resp);
+		req.getRequestDispatcher("/index.jsp").forward(req,resp);
 		
 
 	}
