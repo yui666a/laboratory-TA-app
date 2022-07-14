@@ -22,21 +22,20 @@ public class LoginServlet extends HttpServlet {
 
 		//クライアントIPアドレスの取得
 		//テスト用
-		String clientIpAddr = req.getParameter("pcIpAddr");
+//		String clientIpAddr = req.getParameter("pcIpAddr");
 		//TODO: 本番用
-//		InetAddress cIpAddr = InetAddress.getLocalHost();
-//		String clientIpAddr = cIpAddr.getHostAddress();
-		
+		String clientIpAddr = req.getRemoteAddr();
+
 		//ipアドレスからPC情報を取得
 		Pc pc = StartServlet.getPcFromIpAddr(clientIpAddr);
-		
+
 		//ipアドレスからpc情報を取得できたか
 		Boolean addrCollationFlag = false; //ログイン成否フラグ
 		if(pc != null) addrCollationFlag = true;
-		
+
 		if(addrCollationFlag) {
 //			// ログイン成功時の処理
-			
+
 			//ログイン中に変更
 			StartServlet.setLogin(pc.getPcId(), true);
 //			// Requestにpcデータを保存
@@ -44,13 +43,13 @@ public class LoginServlet extends HttpServlet {
 //			req.setAttribute("pcId", pc.getPcId());
 //			req.setAttribute("handStatus", pc.getHandStatus());
 //			req.setAttribute("helpStatus", pc.getHelpStatus());
-			
+
 			req.getRequestDispatcher("/index.html").forward(req,resp);
 		}else{
 //			//ログイン失敗時の処理
 			req.getRequestDispatcher("/error.html").forward(req,resp);
 		}
 	}
-	
-//-----------------補助関数-------------------------------------------------	
+
+//-----------------補助関数-------------------------------------------------
 }
