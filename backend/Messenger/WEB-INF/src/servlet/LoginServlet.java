@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.net.InetAddress;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,6 +26,10 @@ public class LoginServlet extends HttpServlet {
 //		String clientIpAddr = req.getParameter("pcIpAddr");
 		//TODO: 本番用
 		String clientIpAddr = req.getRemoteAddr();
+		if(clientIpAddr.equals("0:0:0:0:0:0:0:1")) {
+			InetAddress cIpAddr = InetAddress.getLocalHost();
+			clientIpAddr = cIpAddr.getHostAddress();
+		}
 
 		//ipアドレスからPC情報を取得
 		Pc pc = StartServlet.getPcFromIpAddr(clientIpAddr);
