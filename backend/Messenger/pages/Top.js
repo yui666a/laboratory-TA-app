@@ -20,7 +20,6 @@ export default {
      */
     axios.get("/Messenger/v1/whoami").then((response) => {
       sessionStorage.setItem("pcId", response.data.pcId);
-
       // ログインしていなかった場合，ログイン画面に遷移
       if(!response.data.isLogin){
         window.location.href = '/Messenger/login.html'
