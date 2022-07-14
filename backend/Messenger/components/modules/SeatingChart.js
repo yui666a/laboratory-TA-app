@@ -1,4 +1,3 @@
-
 import SeatInfo from "./Seat.js";
 
 export default {
@@ -40,38 +39,20 @@ export default {
   data() {
     return {
       // sample data
-      seats: {
-        801: {
-          pcName: "ics801",
-          studentId: "123456",
-          studentName: "まつもと ただのぶ",
-        },
-        802: {
-          pcName: "ics802",
-          studentId: "123457",
-          studentName: "あいそ",
-        },
-        803: {
-          pcName: "ics801",
-          studentId: "123456",
-          studentName: "まつもと ただのぶ",
-        },
-        804: {
-          pcName: "ics802",
-          studentId: "123457",
-          studentName: "あいそ",
-        },
-        805: {
-          pcName: "ics801",
-          studentId: "123456",
-          studentName: "まつもと ただのぶ",
-        },
-        870: {
-          pcName: "ics802",
-          studentId: "123457",
-          studentName: "あいそ",
-        },
-      },
+      seats: {},
     };
+  },
+  mounted() {
+    // 3秒ごとに更新
+    setInterval(() => {
+      axios.get("/Messenger/v1/active-seats").then((response) => {
+        const activeSeats = response.data.filter((seat) => seat.isLogin);
+        let tmpSeats = {};
+        activeSeats.map((seat) => {
+          tmpSeats = { ...tmpSeats, [seat.pcId.substring(3)]: seat };
+        });
+        this.seats = tmpSeats;
+      });
+    }, 3000);
   },
 };

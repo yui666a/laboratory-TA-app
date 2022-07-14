@@ -14,7 +14,9 @@ export default {
           <WaitingPerson :waitingPerson="waiting" />
         </div>
       </div>
-      <Button :value="buttonText" :onClick="onClickHandButton" />
+      <div class="waiting-list-button-area">
+        <Button :value="buttonText" :onClick="onClickHandButton" />
+      </div>
     </div>
   `,
   data() {
@@ -51,8 +53,14 @@ export default {
   },
   methods: {
     onClickHandButton() {
-      // TODO: implement me
-      console.log("button was clicked");
+      const pcId = sessionStorage.getItem("pcId");
+      axios.post("/Messenger/v1/call/" + pcId.substring(3)).then((response) => {
+        // 送信後，自分の状態を確認する
+        let mySeat = response.data.filter((seat) => seat.pcId === pcId)[0];
+        if (mySeat.pcId == pcId) {
+          this.buttonText = mySeat.handStatus ? "手をさげる" : "手を挙げる";
+        }
+      });
     },
   },
 };
