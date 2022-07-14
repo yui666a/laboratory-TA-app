@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.net.InetAddress;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -29,6 +30,10 @@ public class WhoamI extends HttpServlet {
 		//リクエストがあったPCのipアドレスを取得
 		//本番用
 		String clientIpAddr = req.getRemoteAddr();
+		if(clientIpAddr.equals("0:0:0:0:0:0:0:1")) {
+			InetAddress cIpAddr = InetAddress.getLocalHost();
+			clientIpAddr = cIpAddr.getHostAddress();
+		}
 		Pc pc = getPcFromIpAddr(clientIpAddr);
 		//テスト用
 //		Pc pc = getPcFromIpAddr("133.44.118.191");
@@ -40,13 +45,7 @@ public class WhoamI extends HttpServlet {
 		PrintWriter out = resp.getWriter();
 		out.println(jsonList);
 
-//		req.setAttribute("pcIpAddress", pc.getIpAdress());
-//		req.setAttribute("pcId", pc.getPcId());
-//		req.setAttribute("handStatus", pc.getHandStatus());
-//		req.setAttribute("helpStatus", pc.getHelpStatus());
-//		req.setAttribute("myPc", jsonList.toString());
-//
-//		req.getRequestDispatcher("/index.html").forward(req,resp);
+
 
 
 	}
