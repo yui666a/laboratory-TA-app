@@ -1,26 +1,21 @@
 package beans;
 
 public class Pc {
-	
+
 	protected String pcId = null; //icsXXX
 	protected String ipAdress = null; //ドメインは133.44.118.158-228の間
 	protected Boolean isStudent = null; // true:学生が利用するPC, false:TA,教員が利用するPC
 	protected Boolean isLogin = null; // true:ログイン中, false:未ログイン
-	protected Boolean handStatus = null; // true:挙手をしている状態, false:挙手をしていない状態
-	protected Boolean helpStatus = null; // true:TA教員ヘルプ中, false:ヘルプしていない (*この変数はまだ利用していない)
-	
+	protected String helpStatus = null; // 手を挙げていない: None
+											//	手を挙げている: Troubled
+											// TA教員対応中: Supporting
+
 	//--------アクセッサ関係-------------------------------------------------
-	public Boolean getHandStatus() {
-		return handStatus;
-	}
-	public void setHandStatus(Boolean handStatus) {
-		this.handStatus = handStatus;
-	}	
-	
-	public Boolean getHelpStatus() {
+
+	public String getHelpStatus() {
 		return helpStatus;
 	}
-	public void setHelpStatus(Boolean helpStatus) {
+	public void setHelpStatus(String helpStatus) {
 		this.helpStatus = helpStatus;
 	}
 	public String getIpAdress() {

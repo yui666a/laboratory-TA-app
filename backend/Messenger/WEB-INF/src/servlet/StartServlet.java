@@ -17,7 +17,7 @@ import beans.Pc;
 
 @WebListener
 public class StartServlet implements ServletContextListener {
-	
+
 	Pc pcData;
     private static List<Pc> pcList = new LinkedList<Pc>();
 
@@ -30,7 +30,7 @@ public class StartServlet implements ServletContextListener {
 	    String line;
 	    //読み込み行数の管理
 	    int i = 0;
-	    
+
 	    //1行ずつ読み込みを実行
 	    try {
 			while ((line = br.readLine()) != null) {
@@ -38,16 +38,15 @@ public class StartServlet implements ServletContextListener {
 				if (i != 0) {
 			    //カンマで分割した内容を配列に格納する
 				  String[] lineData = line.split(",");
-				  
+
 				  //読み込んだ行をPcクラスに格納
 				  pcData = new Pc();
 				  pcData.setPcId(lineData[0]);
 				  pcData.setIpAdress(lineData[1]);
 				  pcData.setIsStudent(Boolean.valueOf(lineData[2]));
 				  pcData.setIsLogin(false);
-				  pcData.setHandStatus(false);
-				  pcData.setHelpStatus(false);
-				  
+				  pcData.setHelpStatus("None");
+
 				  //pcListに追加
 				  pcList.add(pcData);
 				}
@@ -58,14 +57,14 @@ public class StartServlet implements ServletContextListener {
 			e.printStackTrace();
 			System.out.println(e);
 		}
-	    
+
 	    System.out.println("サーバを起動します");
 	}
 
     public void contextDestroyed(ServletContextEvent arg0)  {
     	System.out.println("サーバがダウンされました");
-    }   
-    
+    }
+
 //-----------アクセッサ-----------------------------------------------------------------
 	public static List<Pc> getPcList() {
 		return pcList;
@@ -84,46 +83,32 @@ public class StartServlet implements ServletContextListener {
 			}
 		}
 	}
-    public static void setHandStatus(String pcId, boolean b) {
+    public static void setHelpStatus(String pcId, String str) {
 		List<Pc> pcList = StartServlet.getPcList();
 		int i=0;
 		for(Pc pc : pcList) {
 			if(pcId.equals(pc.getPcId())) {
 				Pc pcTmp = new Pc();
 				pcTmp = pc;
-				pcTmp.setHandStatus(b);
+				pcTmp.setHelpStatus(str);
 				pcList.set(i, pcTmp);
 			}else {
 				i++;
 			}
 		}
     }
-    public static void setHelpStatus(String pcId, boolean b) {
-		List<Pc> pcList = StartServlet.getPcList();
-		int i=0;
-		for(Pc pc : pcList) {
-			if(pcId.equals(pc.getPcId())) {
-				Pc pcTmp = new Pc();
-				pcTmp = pc;
-				pcTmp.setHelpStatus(b);
-				pcList.set(i, pcTmp);
-			}else {
-				i++;
-			}
-		}
-    }
-    
+
 	public static Pc getPcFromIpAddr(String addr) {
 		List<Pc> pcList = StartServlet.getPcList();
 		for(Pc pc : pcList) {
 			if(addr.equals(pc.getIpAdress())) {
-				return pc;	
+				return pc;
 			}
-					
+
 		}
 		return null;
 	}
-    
+
 //-----------補助関数-----------------------------------------------------------------
 	private BufferedReader FileReader(String filePath, ServletContextEvent arg0) {
 		String realPath = arg0.getServletContext().getRealPath(filePath);
@@ -138,5 +123,5 @@ public class StartServlet implements ServletContextListener {
 		BufferedReader br = new BufferedReader(is);
 		return br;
 	}
-	
+
 }
