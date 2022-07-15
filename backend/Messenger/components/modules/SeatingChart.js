@@ -43,7 +43,7 @@ export default {
     };
   },
   mounted() {
-    // 3秒ごとに更新
+    // 1秒ごとに更新
     setInterval(() => {
       axios.get("/Messenger/v1/active-seats").then((response) => {
         const activeSeats = response.data.filter((seat) => seat.isLogin);
@@ -53,6 +53,6 @@ export default {
         });
         this.seats = tmpSeats;
       });
-    }, 3000);
+    }, 1000);
   },
 };
