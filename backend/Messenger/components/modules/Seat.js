@@ -3,14 +3,8 @@ export default {
   template: `
     <div v-if="seat" class="seat-info">
       <div> ics{{ seatId }} </div>
-      <div v-if="seat.helpStatus === 'Troubled'">
-        <span> 挙手 </span>
-      </div>
-      <div v-else-if="seat.helpStatus === 'Supporting'">
-        <span> 対応中 </span>
-      </div>
-      <div v-else>
-        <span>&nbsp;</span>
+      <div>
+        <span> {{statusMap.get(seat.helpStatus)}} </span>
       </div>
     </div>
 
@@ -19,4 +13,13 @@ export default {
       <div><span>&nbsp;</span></div>
     </div>`,
   props: { seatId: String, seat: Object },
+  data() {
+    return {
+      statusMap: new Map([
+        ["Troubled", "挙手"],
+        ["Supporting", "対応中"],
+        ["None", " "],
+      ]),
+    };
+  },
 };
