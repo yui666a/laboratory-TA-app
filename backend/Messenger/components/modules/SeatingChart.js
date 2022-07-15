@@ -21,6 +21,7 @@ export default {
           <SeatInfo
             :seatId="seat"
             :seat="seats[seat]"
+            :isStudent="isStudent"
             v-bind:class="{
               mr50: row === 1 && (column === 2 || column === 4 || column === 9),
               ml50: row === 1 && column !== 2 && column !== 4 && column !== 9,
@@ -40,6 +41,7 @@ export default {
     return {
       // sample data
       seats: {},
+      isStudent: true,
     };
   },
   mounted() {
@@ -54,5 +56,15 @@ export default {
         this.seats = tmpSeats;
       });
     }, 1000);
+
+    axios
+      .get("/Messenger/v1/whoami")
+      .then((response) => {
+        this.isStudent = response.data.isStudent;
+      })
+      .catch((error) => {
+        // TypeError: Cannot read properties of null (reading 'isStudent')
+        this.isStudent = false;
+      });
   },
 };
