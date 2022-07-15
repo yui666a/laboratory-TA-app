@@ -1,7 +1,14 @@
 export default {
   name: "SeatInfo",
   template: `
-    <div v-if="seat" class="seat-info">
+    <div
+      v-if="seat"
+      class="seat-info"
+      v-bind:class="{
+        troubled: seat.helpStatus === 'Troubled',
+        supporting: seat.helpStatus === 'Supporting',
+      }"
+    >
       <div> ics{{ seatId }} </div>
       <div v-if="isStudent">
         <span>&nbsp;</span>
@@ -21,7 +28,7 @@ export default {
       statusMap: new Map([
         ["Troubled", "挙手"],
         ["Supporting", "対応中"],
-        ["None", " "],
+        ["None", "　"],
       ]),
     };
   },

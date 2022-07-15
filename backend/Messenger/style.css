@@ -70,6 +70,16 @@ input[type="button"].secondary {
   opacity: 0.3;
 }
 
+.troubled {
+  border: 1px solid red;
+  background: #ffc0cb;
+}
+
+.supporting {
+  border: 1px solid green;
+  background: #90ee90;
+}
+
 /* waiting-list */
 .waiting-list-section {
   width: 20%;
