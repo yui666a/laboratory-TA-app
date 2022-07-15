@@ -1,10 +1,24 @@
-input[type="button"]{
+input[type="button"] {
   /* width: 100%; */
   width: 200px;
   height: 3em;
   border-radius: 0.5em;
-  border:none;
-  background: #57f;
+  border: none;
+  margin: 5px;
+  /* background: rgb(103, 133, 253); */
+}
+input[type="button"].primary {
+  padding: 10px 2rem;
+  width: auto;
+  border-radius: 5px;
+  box-shadow: 5px 5px 10px #bbbbbb, -5px -5px 10px #ffffff;
+}
+
+input[type="button"].secondary {
+  padding: 10px 2rem;
+  width: auto;
+  border-radius: 5px;
+  box-shadow: inset 3px 3px 5px #bbbbbb, inset -3px -3px 5px #ffffff;
 }
 
 #app {
@@ -21,9 +35,8 @@ input[type="button"]{
   display: flex;
 }
 
-
 /* seating-chart */
-.seating-chart-section{
+.seating-chart-section {
   width: 80%;
 }
 .seating-chart-area {
@@ -75,8 +88,6 @@ input[type="button"]{
   border-radius: 10px;
   text-align: center;
 }
-
-
 
 /* login-form */
 #login-form {

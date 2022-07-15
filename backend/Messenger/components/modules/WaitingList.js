@@ -15,13 +15,14 @@ export default {
         </div>
       </div>
       <div class="waiting-list-button-area">
-        <Button :value="buttonText" :onClick="onClickHandButton" />
+        <Button :value="buttonText" :onClick="onClickHandButton" :variant="buttonVariant"/>
       </div>
     </div>
   `,
   data() {
     return {
       buttonText: "手を挙げる",
+      buttonVariant: "primary",
       waitingLi: [
         {
           pcName: "ics810",
@@ -59,6 +60,7 @@ export default {
         let mySeat = response.data.filter((seat) => seat.pcId === pcId)[0];
         if (mySeat.pcId == pcId) {
           this.buttonText = mySeat.helpStatus !== "None" ? "手をさげる" : "手を挙げる";
+          this.buttonVariant = mySeat.helpStatus === "None" ? "primary" : "secondary";
         }
       });
     },
