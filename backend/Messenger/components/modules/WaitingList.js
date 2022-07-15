@@ -58,7 +58,7 @@ export default {
         // 送信後，自分の状態を確認する
         let mySeat = response.data.filter((seat) => seat.pcId === pcId)[0];
         if (mySeat.pcId == pcId) {
-          this.buttonText = mySeat.handStatus ? "手をさげる" : "手を挙げる";
+          this.buttonText = mySeat.helpStatus !== "None" ? "手をさげる" : "手を挙げる";
         }
       });
     },
