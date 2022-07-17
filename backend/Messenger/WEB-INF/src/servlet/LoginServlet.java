@@ -22,13 +22,13 @@ public class LoginServlet extends HttpServlet {
 
 		//クライアントIPアドレスの取得
 		//テスト用
-		String clientIpAddr = req.getParameter("pcIpAddr");
+		// String clientIpAddr = req.getParameter("pcIpAddr");
 		//TODO: 本番用
-//		String clientIpAddr = req.getRemoteAddr();
-//		if(clientIpAddr.equals("0:0:0:0:0:0:0:1")) {
-//			InetAddress cIpAddr = InetAddress.getLocalHost();
-//			clientIpAddr = cIpAddr.getHostAddress();
-//		}
+		String clientIpAddr = req.getRemoteAddr();
+		if(clientIpAddr.equals("0:0:0:0:0:0:0:1")) {
+			InetAddress cIpAddr = InetAddress.getLocalHost();
+			clientIpAddr = cIpAddr.getHostAddress();
+		}
 
 		//ipアドレスからPC情報を取得
 		Pc pc = StartServlet.getPcFromIpAddr(clientIpAddr);
