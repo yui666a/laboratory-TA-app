@@ -5,6 +5,8 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -46,6 +48,7 @@ public class StartServlet implements ServletContextListener {
 				  pcData.setIsStudent(Boolean.valueOf(lineData[2]));
 				  pcData.setIsLogin(false);
 				  pcData.setHelpStatus("None");
+				  pcData.setLastRequestTime(null);
 
 				  //pcListに追加
 				  pcList.add(pcData);
@@ -57,6 +60,9 @@ public class StartServlet implements ServletContextListener {
 			e.printStackTrace();
 			System.out.println(e);
 		}
+	    
+        ScheduleManager schedule = ScheduleManager.getInstance();
+        schedule.start();
 
 	    System.out.println("サーバを起動します");
 	}
@@ -98,6 +104,7 @@ public class StartServlet implements ServletContextListener {
 		}
     }
 
+  
 	public static Pc getPcFromIpAddr(String addr) {
 		List<Pc> pcList = StartServlet.getPcList();
 		for(Pc pc : pcList) {
@@ -105,6 +112,31 @@ public class StartServlet implements ServletContextListener {
 				return pc;
 			}
 
+		}
+		return null;
+	}
+	
+	public static Date setRequestTime(String pcId) {
+		List<Pc> pcList = StartServlet.getPcList();
+		for(Pc pc : pcList) {
+			if(pcId.equals(pc.getPcId())) {
+				long millis = System.currentTimeMillis();
+				Timestamp timestamp = new Timestamp(millis);
+				Date dt = new Date(timestamp.getTime());
+				//リクエストをしたpcの最終アクセス時間を格納
+				pc.setLastRequestTime(dt);
+				return pc.getLastRequestTime();
+			}
+		}
+		return null;
+	}
+	public static Date getRequestTime(String pcId) {
+		List<Pc> pcList = StartServlet.getPcList();
+		for(Pc pc : pcList) {
+			if(pcId.equals(pc.getPcId())) {
+				//リクエストをしたpcの最終アクセス時間をリターン
+				return pc.getLastRequestTime();
+			}
 		}
 		return null;
 	}
