@@ -34,14 +34,15 @@ public class Call extends HttpServlet {
 
 		Pc pc = getPcFromPcId("ics"+myPcId);
 		if(pc != null) {
-
-
 			//現在のヘルプ状態を取得
 			String preHelpStatus = pc.getHelpStatus();
 
 			//現在のヘルプ状態を反転
 			if(preHelpStatus.equals("None")) StartServlet.setHelpStatus("ics"+myPcId, "Troubled");
 			else StartServlet.setHelpStatus("ics"+myPcId, "None");
+			
+			//最終リクエスト時間を変更
+			StartServlet.setRequestTime(pc.getPcId());
 
 			//pcListをJsonに変換
 			String jsonList = "";

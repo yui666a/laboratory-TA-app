@@ -34,16 +34,6 @@ public class Active extends HttpServlet {
 		// JSON形式のメッセージリストを出力
 		PrintWriter out = resp.getWriter();
 		out.println(jsonList);
-		
-//		Pc pc = StartServlet.getPcFromIpAddr("133.44.118.191");
-//		
-//		req.setAttribute("pcIpAddress", pc.getIpAdress());
-//		req.setAttribute("pcId", pc.getPcId());
-//		req.setAttribute("handStatus", pc.getHandStatus());
-//		req.setAttribute("helpStatus", pc.getHelpStatus());
-//		req.setAttribute("pcList", jsonList.toString());
-//		
-//		req.getRequestDispatcher("/index.html").forward(req,resp);
 	}
 
 
