@@ -189,3 +189,13 @@ input[type="button"].secondary {
   transition: 0.3s;
   color: rgb(29, 172, 194);
 }
+
+.mobile .seating-chart-section{
+  width: 100%;
+}
+.mobile .seat-info{
+  margin: 1px;
+  padding: 0;
+  width: calc(90vw / 10);
+  height: calc(90vw / 10);
+}
