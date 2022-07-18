@@ -16,15 +16,15 @@ class Schedule extends TimerTask {
 
     @Override
     public void run() {
-    	//現在時刻の取得
+		//現在時刻の取得
 		long millis = System.currentTimeMillis();
 		Timestamp timestamp = new Timestamp(millis);
 		// Date型へ変換
-        Date dt = new Date(timestamp.getTime());
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(dt);
-        //現在時刻から30分前に閾値をセット
-        cal.add(Calendar.MINUTE, -30);
+		Date dt = new Date(timestamp.getTime());
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(dt);
+		//現在時刻から30分前に閾値をセット
+		cal.add(Calendar.MINUTE, -30);
 		
 		List<Pc> pcList = StartServlet.getPcList();
 		for(Pc pc : pcList) {
