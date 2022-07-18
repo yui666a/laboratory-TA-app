@@ -1,9 +1,9 @@
-import SeatInfo from "./Seat.js";
+import SeatInfoMobile from "./SeatInfoMobile.js";
 
 export default {
-  name: "SeatingChart",
+  name: "SeatingChartMobile",
   components: {
-    SeatInfo,
+    SeatInfoMobile,
   },
   template: `  <div class="seating-chart-section">
     <div class="seating-chart-area">
@@ -15,21 +15,17 @@ export default {
           :set="(seat = '8' + ((column - 1) * 8 + row).toString().padStart(2, '0'))"
         >
           <div
-            style="width: 5em; margin: 7px"
+            style="width: calc(90vw / 10); margin: 2px"
             v-if="row === 1 && column !== 2 && column !== 4 && column !== 9"
           ></div>
-          <SeatInfo
+          <SeatInfoMobile
             :seatId="seat"
             :seat="seats[seat]"
             :isStudent="isStudent"
-            v-bind:class="{
-              mr50: row === 1 && (column === 2 || column === 4 || column === 9),
-              ml50: row === 1 && column !== 2 && column !== 4 && column !== 9,
-            }"
             v-bind:style="[column === 9 && row === 8 ? 'display: none;' : '']"
           />
           <div
-            style="width: 5em; margin: 7px"
+            style="width: calc(90vw / 10); margin: 2px"
             v-if="row === 1 && (column === 2 || column === 4)"
           ></div>
         </div>
@@ -39,7 +35,6 @@ export default {
   `,
   data() {
     return {
-      // sample data
       seats: {},
       isStudent: true,
     };
