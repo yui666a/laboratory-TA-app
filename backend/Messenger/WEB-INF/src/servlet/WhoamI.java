@@ -36,7 +36,10 @@ public class WhoamI extends HttpServlet {
 		}
 		Pc pc = getPcFromIpAddr(clientIpAddr);
 		//テスト用
-//		Pc pc = getPcFromIpAddr("133.44.118.191");
+		// Pc pc = getPcFromIpAddr("133.44.118.191");
+		
+		//最終リクエスト時間を変更
+		StartServlet.setRequestTime(pc.getPcId());
 
 		// メッセージリストをJSON形式のメッセージリストに変換
 		String jsonList = getJsonList(pc);
@@ -44,10 +47,6 @@ public class WhoamI extends HttpServlet {
 		// JSON形式のメッセージリストを出力
 		PrintWriter out = resp.getWriter();
 		out.println(jsonList);
-
-
-
-
 	}
 
 	//---------------補助関数-----------------------------------------------------
