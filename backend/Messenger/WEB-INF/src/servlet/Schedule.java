@@ -27,7 +27,7 @@ class Schedule extends TimerTask {
         cal.add(Calendar.MINUTE, -30);
 		
 		List<Pc> pcList = StartServlet.getPcList();
-		
+
 		for(Pc pc : pcList) {
 			if(pc.getLastRequestTime() != null && pc.getHelpStatus() == "None") {
 				Calendar pc_cal = Calendar.getInstance();
@@ -38,7 +38,7 @@ class Schedule extends TimerTask {
 					pc.setLastRequestTime(null);
 					pc.setHelpStatus("None");
 				}
-			}
+		}
 			pc.getLastRequestTime();
 		}
     }
