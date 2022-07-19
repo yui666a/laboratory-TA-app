@@ -49,7 +49,7 @@ public class Call extends HttpServlet {
 			//pcJsonListをJsonに変換
 			String jsonList = "";
 			List<Pc> pcList = StartServlet.getPcList();
-			
+
 			List<PcJson> pcJsonList = new LinkedList<PcJson>();
 			for(Pc tempPc : pcList) {
 				if(tempPc.getIsLogin()) {
