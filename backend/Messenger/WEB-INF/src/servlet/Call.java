@@ -62,7 +62,6 @@ public class Call extends HttpServlet {
 					pcJsonList.add(pcJson);
 				}
 			}
-			
 			jsonList = getJsonList(pcJsonList);
 			
 			// JSON形式のメッセージリストを出力
