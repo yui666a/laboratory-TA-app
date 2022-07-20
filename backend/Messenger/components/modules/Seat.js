@@ -5,8 +5,8 @@ export default {
       v-if="seat"
       class="seat-info"
       v-bind:class="{
-        troubled: seat.helpStatus === 'Troubled',
-        supporting: seat.helpStatus === 'Supporting',
+        troubled: seat.helpStatus === 'Troubled' && !isStudent,
+        supporting: seat.helpStatus === 'Supporting' && !isStudent,
       }"
     >
       <div> ics{{ seatId }} </div>
