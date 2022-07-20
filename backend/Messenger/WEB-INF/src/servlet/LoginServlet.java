@@ -1,7 +1,6 @@
 package servlet;
 
 import java.io.IOException;
-import java.net.InetAddress;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -23,7 +22,7 @@ public class LoginServlet extends HttpServlet {
 
 		//クライアントIPアドレスの取得
 		//テスト用
-//		String clientIpAddr = req.getParameter("pcIpAddr");
+		// String clientIpAddr = req.getParameter("pcIpAddr");
 		//TODO: 本番用
 		String clientIpAddr = req.getRemoteAddr();
 		if(clientIpAddr.equals("0:0:0:0:0:0:0:1")) {
@@ -37,17 +36,11 @@ public class LoginServlet extends HttpServlet {
 		//ipアドレスからpc情報を取得できたか
 		Boolean addrCollationFlag = false; //ログイン成否フラグ
 		if(pc != null) addrCollationFlag = true;
-
+		
 		if(addrCollationFlag) {
 //			// ログイン成功時の処理
-
-			//ログイン中に変更
 			StartServlet.setLogin(pc.getPcId(), true);
-//			// Requestにpcデータを保存
-//			req.setAttribute("pcIpAddress", pc.getIpAdress());
-//			req.setAttribute("pcId", pc.getPcId());
-//			req.setAttribute("handStatus", pc.getHandStatus());
-//			req.setAttribute("helpStatus", pc.getHelpStatus());
+			StartServlet.setRequestTime(pc.getPcId());
 
 			req.getRequestDispatcher("/index.html").forward(req,resp);
 		}else{

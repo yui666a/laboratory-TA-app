@@ -1,5 +1,7 @@
 package beans;
 
+import java.util.Date;
+
 public class Pc {
 
 	protected String pcId = null; //icsXXX
@@ -9,9 +11,16 @@ public class Pc {
 	protected String helpStatus = null; // 手を挙げていない: None
 											//	手を挙げている: Troubled
 											// TA教員対応中: Supporting
+	protected Date lastRequestTime = null; //最終リクエスト時間
 
 	//--------アクセッサ関係-------------------------------------------------
 
+	public Date getLastRequestTime() {
+		return lastRequestTime;
+	}
+	public void setLastRequestTime(Date lastRequestTime) {
+		this.lastRequestTime = lastRequestTime;
+	}
 	public String getHelpStatus() {
 		return helpStatus;
 	}
