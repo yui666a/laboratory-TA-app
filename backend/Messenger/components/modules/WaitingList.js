@@ -15,41 +15,41 @@ export default {
         </div>
       </div>
       <div class="waiting-list-button-area">
-        <Button :value="buttonText" :onClick="onClickHandButton" :variant="buttonVariant"/>
+        <Button :value="buttonText" :onClick="onClickHandButton" :buttonIsClicked="buttonIsClicked"/>
       </div>
     </div>
   `,
   data() {
     return {
       buttonText: "手を挙げる",
-      buttonVariant: "primary",
-      waitingLi: [
-        {
-          pcName: "ics810",
-          studentId: "123456",
-          studentName: "安倍　晋三",
-        },
-        {
-          pcName: "ics821",
-          studentId: "123457",
-          studentName: "ヨシダ　トミオ",
-        },
-        {
-          pcName: "ics831",
-          studentId: "123458",
-          studentName: "マツシタ　マサヤ",
-        },
-        {
-          pcName: "ics833",
-          studentId: "123459",
-          studentName: "アソウ　タロウ",
-        },
-        {
-          pcName: "ics844",
-          studentId: "123460",
-          studentName: "アイソ　ヒトシ",
-        },
-      ],
+      buttonIsClicked: "",
+      // waitingLi: [
+      //   {
+      //     pcName: "ics810",
+      //     studentId: "123456",
+      //     studentName: "安倍　晋三",
+      //   },
+      //   {
+      //     pcName: "ics821",
+      //     studentId: "123457",
+      //     studentName: "ヨシダ　トミオ",
+      //   },
+      //   {
+      //     pcName: "ics831",
+      //     studentId: "123458",
+      //     studentName: "マツシタ　マサヤ",
+      //   },
+      //   {
+      //     pcName: "ics833",
+      //     studentId: "123459",
+      //     studentName: "アソウ　タロウ",
+      //   },
+      //   {
+      //     pcName: "ics844",
+      //     studentId: "123460",
+      //     studentName: "アイソ　ヒトシ",
+      //   },
+      // ],
     };
   },
   methods: {
@@ -60,7 +60,7 @@ export default {
         let mySeat = response.data.filter((seat) => seat.pcId === pcId)[0];
         if (mySeat.pcId == pcId) {
           this.buttonText = mySeat.helpStatus !== "None" ? "手をさげる" : "手を挙げる";
-          this.buttonVariant = mySeat.helpStatus === "None" ? "primary" : "secondary";
+          this.buttonIsClicked = mySeat.helpStatus === "None" ? "" : "clicked";
         }
       });
     },
