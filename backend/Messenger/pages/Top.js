@@ -28,9 +28,9 @@ export default {
     getIsMobile() {
       let userAgent = window.navigator.userAgent.toLowerCase();
       return !(
-        userAgent.indexOf("iphone") == -1 ||
-        userAgent.indexOf("ipad") == -1 ||
-        userAgent.indexOf("android") == -1 ||
+        userAgent.indexOf("iphone") == -1 &&
+        userAgent.indexOf("ipad") == -1 &&
+        userAgent.indexOf("android") == -1 &&
         userAgent.indexOf("mobile") == -1
       );
     },
