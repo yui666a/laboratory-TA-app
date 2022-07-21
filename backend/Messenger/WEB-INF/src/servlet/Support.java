@@ -2,7 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.LinkedList;
+import java.net.InetAddress;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -15,11 +15,10 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Pc;
-import beans.PcJson;
 
-@WebServlet(urlPatterns = { "/v1/call/*" })
-//call-teacher/XXXの応答関数
-public class Call extends HttpServlet {
+@WebServlet(urlPatterns = { "/v1/support/*" })
+//support/XXXの応答関数
+public class Support extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse resp)
 			throws ServletException, IOException {
@@ -34,36 +33,35 @@ public class Call extends HttpServlet {
 		int beginIdx = url.lastIndexOf("/"); //icsのsの位置を取得
 		String myPcId = url.substring(beginIdx+1); //実際は番号だけ知りたいので+1する
 
-		Pc pc = getPcFromPcId("ics"+myPcId);
-		if(pc != null) {
+		Pc studentPc = getPcFromPcId("ics"+myPcId);
+		if(studentPc != null) {
 			//現在のヘルプ状態を取得
-			String preHelpStatus = pc.getHelpStatus();
+			String preHelpStatus = studentPc.getHelpStatus();
 
-			//現在のヘルプ状態を反転
-			if(preHelpStatus.equals("None")) StartServlet.setHelpStatus("ics"+myPcId, "Troubled");
-			else StartServlet.setHelpStatus("ics"+myPcId, "None");
+			//現在のヘルプ状態から状態を遷移する "None"状態は遷移なし
+			if(preHelpStatus.equals("Troubled")) {
+				StartServlet.setHelpStatus("ics"+myPcId, "Supporting");
+			}else if(preHelpStatus.equals("Supporting")) {
+				StartServlet.setHelpStatus("ics"+myPcId, "None");
+			}else {
+				//"None"状態は遷移なし
+				System.out.println("予期しない状態遷移が発生しました");
+			}
 			
 			//最終リクエスト時間を変更
-			StartServlet.setRequestTime(pc.getPcId());
+			String clientIpAddr = req.getRemoteAddr();
+			if(clientIpAddr.equals("0:0:0:0:0:0:0:1")) {
+				InetAddress cIpAddr = InetAddress.getLocalHost();
+				clientIpAddr = cIpAddr.getHostAddress();
+			}
+			Pc supportPc = getPcFromIpAddr(clientIpAddr);
+			StartServlet.setRequestTime(supportPc.getPcId());
 
-			//pcJsonListをJsonに変換
+			//pcListをJsonに変換
 			String jsonList = "";
 			List<Pc> pcList = StartServlet.getPcList();
+			jsonList = getJsonList(pcList);
 
-			List<PcJson> pcJsonList = new LinkedList<PcJson>();
-			for(Pc tempPc : pcList) {
-				if(tempPc.getIsLogin()) {
-					PcJson pcJson = new PcJson();
-					pcJson.setPcId(tempPc.getPcId());
-					pcJson.setIpAdress(tempPc.getIpAdress());
-					pcJson.setIsLogin(tempPc.getIsLogin());
-					pcJson.setIsStudent(tempPc.getIsStudent());
-					pcJson.setHelpStatus(tempPc.getHelpStatus());
-					pcJsonList.add(pcJson);
-				}
-			}
-			jsonList = getJsonList(pcJsonList);
-			
 			// JSON形式のメッセージリストを出力
 			PrintWriter out = resp.getWriter();
 			out.println(jsonList);
@@ -74,11 +72,11 @@ public class Call extends HttpServlet {
 	}
 
 	//---------------補助関数-----------------------------------------------------
-	private String getJsonList(List<PcJson> pcJsonList) throws JsonProcessingException{
+	private String getJsonList(List<Pc> pcList) throws JsonProcessingException{
 		String jsonList = "";
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			jsonList = mapper.writeValueAsString(pcJsonList);
+			jsonList = mapper.writeValueAsString(pcList);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -90,6 +88,13 @@ public class Call extends HttpServlet {
 			if(pcId.equals(pc.getPcId())) {
 				return pc;
 			}
+		}
+		return null;
+	}
+	private Pc getPcFromIpAddr(String addr) {
+		List<Pc> pcList = StartServlet.getPcList();
+		for(Pc pc : pcList) {
+			if(addr.equals(pc.getIpAdress())) return pc;
 		}
 		return null;
 	}
