@@ -20,6 +20,7 @@ export default {
       <SeatModal
         v-if="isDisplayedModal"
         :seat="seat"
+        :seatId="seatId"
         @overlyClicked="overlyClicked"
       ></SeatModal>
     </div>`,
