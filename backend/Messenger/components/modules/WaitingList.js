@@ -59,10 +59,23 @@ export default {
         // 送信後，自分の状態を確認する
         let mySeat = response.data.filter((seat) => seat.pcId === pcId)[0];
         if (mySeat.pcId == pcId) {
-          this.buttonText = mySeat.helpStatus !== "None" ? "手をさげる" : "手を挙げる";
+          this.buttonText =
+            mySeat.helpStatus !== "None" ? "手をさげる" : "手を挙げる";
           this.buttonIsClicked = mySeat.helpStatus === "None" ? "" : "clicked";
         }
       });
     },
+  },
+  mounted() {
+    axios
+      .get("/Messenger/v1/whoami")
+      .then((response) => {
+        this.buttonText =
+          mySeat.helpStatus !== "None" ? "手を挙げる" : "手をさげる";
+        this.buttonIsClicked = mySeat.helpStatus === "None" ? "" : "clicked";
+      })
+      .catch((error) => {
+        console.error(error);
+      });
   },
 };
