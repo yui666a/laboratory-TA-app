@@ -182,12 +182,39 @@ input[type="button"].clicked {
   color: rgb(29, 172, 194);
 }
 
-.mobile .seating-chart-section{
+.mobile .seating-chart-section {
   width: 100%;
 }
-.mobile .seat-info{
+.mobile .seat-info {
   margin: 1px;
   padding: 0;
   width: calc(90vw / 10);
   height: calc(90vw / 10);
+}
+
+.modal-wrapper {
+  display: flex;
+  align-content: center;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  position: absolute;
+}
+.overlay {
+  position: absolute;
+  width: 100vw;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+.modal-small {
+  position: fixed;
+  background: white;
+  border-radius: 10px;
+  padding: 10px;
+  z-index: 10;
 }
