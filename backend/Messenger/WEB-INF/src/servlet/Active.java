@@ -2,6 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -14,6 +15,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Pc;
+import beans.PcJson;
 
 @WebServlet(urlPatterns = { "/v1/active-seats" })
 //active-seatsの応答関数
@@ -26,10 +28,24 @@ public class Active extends HttpServlet {
 		req.setCharacterEncoding("UTF-8");
 		resp.setContentType("text/html;charset=UTF-8");
 
-		//pcListをJsonに変換
+		//pcJsonListをJsonに変換
 		String jsonList = "";
 		List<Pc> pcList = StartServlet.getPcList();
-		jsonList = getJsonList(pcList);
+		
+		List<PcJson> pcJsonList = new LinkedList<PcJson>();
+		for(Pc pc : pcList) {
+			if(pc.getIsLogin()) {
+				PcJson pcJson = new PcJson();
+				pcJson.setPcId(pc.getPcId());
+				pcJson.setIpAdress(pc.getIpAdress());
+				pcJson.setIsLogin(pc.getIsLogin());
+				pcJson.setIsStudent(pc.getIsStudent());
+				pcJson.setHelpStatus(pc.getHelpStatus());
+				pcJsonList.add(pcJson);
+			}
+		}
+		
+		jsonList = getJsonList(pcJsonList);
 		
 		// JSON形式のメッセージリストを出力
 		PrintWriter out = resp.getWriter();
@@ -38,11 +54,11 @@ public class Active extends HttpServlet {
 
 
 	//---------------補助関数-----------------------------------------------------
-	private String getJsonList(List<Pc> pcList) throws JsonProcessingException{
+	private String getJsonList(List<PcJson> pcJsonList) throws JsonProcessingException{
 		String jsonList = "";
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			jsonList = mapper.writeValueAsString(pcList);
+			jsonList = mapper.writeValueAsString(pcJsonList);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
