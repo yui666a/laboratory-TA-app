@@ -16,9 +16,12 @@ export default {
   methods: {
     support() {
       // TODO: fix url
-      axios.post("/Messenger/v1/call/" + pcId.substring(3)).then((response) => {
-        console.timeLog("成功！TODO:実装してください！");
-      });
+      axios
+        .post("/Messenger/v1/support/" + pcId.substring(3))
+        .then((response) => {
+          console.log("v1/support/" + pcId.substring(3) + " success");
+          this.$emit("overlyClicked");
+        });
     },
   },
 };
