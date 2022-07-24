@@ -19,6 +19,7 @@ export default {
             v-if="row === 1 && column !== 2 && column !== 4 && column !== 9"
           ></div>
           <SeatInfo
+            :myPcId="pcId"
             :seatId="seat"
             :seat="seats[seat]"
             :isStudent="isStudent"
@@ -42,6 +43,7 @@ export default {
       // sample data
       seats: {},
       isStudent: true,
+      pcId: sessionStorage.getItem("pcId").substring(3),
     };
   },
   mounted() {

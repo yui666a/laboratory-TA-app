@@ -5,12 +5,12 @@ export default {
       v-if="seat"
       class="seat-info"
       v-bind:class="{
-        troubled: seat.helpStatus === 'Troubled' && !isStudent,
-        supporting: seat.helpStatus === 'Supporting' && !isStudent,
+        troubled: seat.helpStatus === 'Troubled' && (!isStudent || myPcId === seatId),
+        supporting: seat.helpStatus === 'Supporting' && (!isStudent || myPcId === seatId),
       }"
     >
       <div> ics{{ seatId }} </div>
-      <div v-if="isStudent">
+      <div v-if="isStudent && myPcId !== seatId">
         <span>&nbsp;</span>
       </div>
       <div v-else>
@@ -22,7 +22,7 @@ export default {
       <div> ics{{ seatId }} </div>
       <div><span>&nbsp;</span></div>
     </div>`,
-  props: { seatId: String, seat: Object, isStudent: Boolean },
+  props: { myPcId: String, seatId: String, seat: Object, isStudent: Boolean },
   data() {
     return {
       statusMap: new Map([
