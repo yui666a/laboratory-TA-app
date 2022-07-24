@@ -15,13 +15,15 @@ export default {
           supporting: seat.helpStatus === 'Supporting',
         }"
         @click="displayModal"
-      ></div>
+      >
+        <SeatModal
+          v-if="isDisplayedModal"
+          :seat="seat"
+          :seatId="seatId"
+          @overlyClicked="overlyClicked"
+        ></SeatModal>
+      </div>
       <div v-else class="seat-info mobile sign-out"></div>
-      <SeatModal
-        v-if="isDisplayedModal"
-        :seat="seat"
-        @overlyClicked="overlyClicked"
-      ></SeatModal>
     </div>`,
   props: { seatId: String, seat: Object, isStudent: Boolean },
   data() {
@@ -34,7 +36,7 @@ export default {
       console.timeLog("オーバーレイClicked");
       this.isDisplayedModal = false;
     },
-    displayModal(){
+    displayModal() {
       this.isDisplayedModal = true;
     },
   },
