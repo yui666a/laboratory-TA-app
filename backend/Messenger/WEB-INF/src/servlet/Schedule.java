@@ -1,7 +1,10 @@
 package servlet;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
@@ -27,16 +30,15 @@ class Schedule extends TimerTask {
 		cal.add(Calendar.MINUTE, -30);
 		
 		List<Pc> pcList = StartServlet.getPcList();
-		Date[] handTimeList = new Date[pcList.size()]; //座席数分の配列を用意
-		int listNum = 0; //カウンタ
+		ArrayList<String> handTimeList = new ArrayList<>(); //座席数分のリストを用意
 		for(Pc pc : pcList) {
-			
-			//挙手の順番をリセット
-			pc.setHandPriority(-1);
-			//1. 挙手しているPCの数とその時間を調べる
+			//挙手しているPCの数とその時間を調べる
 			if(pc.getLastHandTime() != null) {
-				handTimeList[listNum] = pc.getLastHandTime();
-				listNum++;
+				String strDate = new SimpleDateFormat("yyyyMMddHHmmss").format(pc.getLastHandTime());
+				handTimeList.add(strDate);
+			} else {
+				//挙手の順番をリセット
+				pc.setHandPriority(-1);
 			}
 			
 			//ログイン中かつ手をあげていない状態のみログイン状態を継続するか確認する
@@ -52,12 +54,21 @@ class Schedule extends TimerTask {
 			}
 		}
 		
-		//1.で調べたPCの数とその時間から手をあげた順番をセットする
-		for(int i=0; i<listNum; i++) {
+		//挙手の時間をソートし順番を決める
+		Collections.sort(handTimeList);
+		//手をあげた順番をhandPriorityにセットする
+		int priority = 1;
+		for(String handTime : handTimeList) {
 			for(Pc pc : pcList) {
-				if(pc.getLastHandTime() == handTimeList[i]) {
-					pc.setHandPriority(i+1);
+				if(pc.getLastHandTime() != null) {
+					String strDate = new SimpleDateFormat("yyyyMMddHHmmss").format(pc.getLastHandTime());
+					if(strDate.equals(handTime)) {
+						pc.setHandPriority(priority);
+						priority++;
+						break;
+					}
 				}
+
 			}
 		}
     }

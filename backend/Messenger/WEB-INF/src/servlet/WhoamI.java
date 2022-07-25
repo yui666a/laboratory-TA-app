@@ -56,6 +56,7 @@ public class WhoamI extends HttpServlet {
 			pcJson.setIpAdress(pc.getIpAdress());
 			pcJson.setIsStudent(pc.getIsStudent());
 			pcJson.setIsLogin(pc.getIsLogin());
+			pcJson.setHandPriority(pc.getHandPriority());
 			jsonList = getJsonList(pcJson);
 			
 			out.println(jsonList);

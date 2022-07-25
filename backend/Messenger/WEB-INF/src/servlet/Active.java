@@ -41,6 +41,7 @@ public class Active extends HttpServlet {
 				pcJson.setIsLogin(pc.getIsLogin());
 				pcJson.setIsStudent(pc.getIsStudent());
 				pcJson.setHelpStatus(pc.getHelpStatus());
+				pcJson.setHandPriority(pc.getHandPriority());
 				pcJsonList.add(pcJson);
 			}
 		}
