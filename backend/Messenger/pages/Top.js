@@ -10,12 +10,14 @@ export default {
     WaitingList,
   },
   template: `
-  <div class="main mobile" v-if="!isStudent && isMobile">
-    <SeatingChartMobile />
-  </div>
-  <div class="main" v-else>
-    <SeatingChart />
-    <WaitingList />
+  <div>
+    <div class="main mobile" v-if="isMobile">
+      <SeatingChartMobile />
+    </div>
+    <div class="main" v-else>
+      <SeatingChart />
+      <WaitingList />
+    </div>
   </div>
 `,
   data() {
@@ -35,7 +37,7 @@ export default {
       );
     },
   },
-  beforeCreate: function () {
+  create(){
     /**
      * pcIdをsessionStorageに保存
      */
@@ -44,7 +46,8 @@ export default {
       .then((response) => {
         response.data.pcId
           ? sessionStorage.setItem("pcId", response.data.pcId)
-          : console.log("pcId is not found");
+          : console.error("pcId is not found");
+        this.isStudent = response.data.isStudent;
         // ログインしていなかった場合，ログイン画面に遷移
         // TODO: 必要なくなっている可能性があるため，コメントアウト中．確認後削除する．
         // if (!response.data.isLogin) {
@@ -52,19 +55,9 @@ export default {
         // }
       })
       .catch((error) => {
-        console.log("pcIdを取得できませんでした");
-        console.error(error);
-      });
-  },
-  mounted() {
-    axios
-      .get("/Messenger/v1/whoami")
-      .then((response) => {
-        this.isStudent = response.data.isStudent;
-      })
-      .catch((error) => {
         // TODO basically, should true
         this.isStudent = false;
+        console.log("pcIdを取得できませんでした");
         console.error(error);
       });
   },

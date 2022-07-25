@@ -67,15 +67,19 @@ export default {
     },
   },
   mounted() {
-    axios
-      .get("/Messenger/v1/whoami")
-      .then((response) => {
-        this.buttonText =
-          mySeat.helpStatus !== "None" ? "手を挙げる" : "手をさげる";
-        this.buttonIsClicked = mySeat.helpStatus === "None" ? "" : "clicked";
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    // 3秒ごとに更新
+    setInterval(() => {
+      axios
+        .get("/Messenger/v1/whoami")
+        .then((response) => {
+          this.buttonText =
+            response.data.helpStatus !== "None" ? "手を挙げる" : "手をさげる";
+          this.buttonIsClicked =
+            response.data.helpStatus === "None" ? "" : "clicked";
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }, 3000);
   },
 };
