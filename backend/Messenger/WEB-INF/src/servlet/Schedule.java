@@ -27,7 +27,19 @@ class Schedule extends TimerTask {
 		cal.add(Calendar.MINUTE, -30);
 		
 		List<Pc> pcList = StartServlet.getPcList();
+		Date[] handTimeList = new Date[pcList.size()]; //座席数分の配列を用意
+		int listNum = 0; //カウンタ
 		for(Pc pc : pcList) {
+			
+			//挙手の順番をリセット
+			pc.setHandOrder(-1);
+			//1. 挙手しているPCの数とその時間を調べる
+			if(pc.getLastHandTime() != null) {
+				handTimeList[listNum] = pc.getLastHandTime();
+				listNum++;
+			}
+			
+			//ログイン中かつ手をあげていない状態のみログイン状態を継続するか確認する
 			if(pc.getLastRequestTime() != null && pc.getHelpStatus() == "None") {
 				Calendar pc_cal = Calendar.getInstance();
 				pc_cal.setTime(pc.getLastRequestTime());
@@ -38,7 +50,15 @@ class Schedule extends TimerTask {
 					pc.setHelpStatus("None");
 				}
 			}
-			pc.getLastRequestTime();
+		}
+		
+		//1.で調べたPCの数とその時間から手をあげた順番をセットする
+		for(int i=0; i<listNum; i++) {
+			for(Pc pc : pcList) {
+				if(pc.getLastHandTime() == handTimeList[i]) {
+					pc.setHandOrder(i+1);
+				}
+			}
 		}
     }
 
