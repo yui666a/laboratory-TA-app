@@ -49,6 +49,7 @@ public class StartServlet implements ServletContextListener {
 				  pcData.setIsLogin(false);
 				  pcData.setHelpStatus("None");
 				  pcData.setLastRequestTime(null);
+				  pcData.setLastHandTime(null);
 
 				  //pcListに追加
 				  pcList.add(pcData);
@@ -136,6 +137,38 @@ public class StartServlet implements ServletContextListener {
 			if(pcId.equals(pc.getPcId())) {
 				//リクエストをしたpcの最終アクセス時間をリターン
 				return pc.getLastRequestTime();
+			}
+		}
+		return null;
+	}
+	
+	public static Date setHandTime(String pcId, Boolean resetFlag) {
+		List<Pc> pcList = StartServlet.getPcList();
+		for(Pc pc : pcList) {
+			if(pcId.equals(pc.getPcId())) {
+				
+				//引数resetFlagがtrueの時、挙手した時間をリセットする
+				if(resetFlag) {
+					pc.setLastHandTime(null);
+				}else {
+					long millis = System.currentTimeMillis();
+					Timestamp timestamp = new Timestamp(millis);
+					Date dt = new Date(timestamp.getTime());
+					//リクエストをしたpcの最終アクセス時間を格納
+					pc.setLastHandTime(dt);
+				}
+				return pc.getLastHandTime();
+			}
+		}
+		return null;
+	}
+	
+	public static Date getHandTime(String pcId) {
+		List<Pc> pcList = StartServlet.getPcList();
+		for(Pc pc : pcList) {
+			if(pcId.equals(pc.getPcId())) {
+				//リクエストをしたpcの最終アクセス時間をリターン
+				return pc.getLastHandTime();
 			}
 		}
 		return null;

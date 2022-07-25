@@ -41,13 +41,15 @@ public class Support extends HttpServlet {
 			//現在のヘルプ状態から状態を遷移する "None"状態は遷移なし
 			if(preHelpStatus.equals("Troubled")) {
 				StartServlet.setHelpStatus("ics"+myPcId, "Supporting");
+				StartServlet.setHandTime("ics"+myPcId, true);
 			}else if(preHelpStatus.equals("Supporting")) {
 				StartServlet.setHelpStatus("ics"+myPcId, "None");
+				StartServlet.setHandTime("ics"+myPcId, true);
 			}else {
 				//"None"状態は遷移なし
 				System.out.println("予期しない状態遷移が発生しました");
 			}
-			
+
 			//最終リクエスト時間を変更
 			String clientIpAddr = req.getRemoteAddr();
 			if(clientIpAddr.equals("0:0:0:0:0:0:0:1")) {
@@ -55,16 +57,22 @@ public class Support extends HttpServlet {
 				clientIpAddr = cIpAddr.getHostAddress();
 			}
 			Pc supportPc = getPcFromIpAddr(clientIpAddr);
-			StartServlet.setRequestTime(supportPc.getPcId());
-
-			//pcListをJsonに変換
-			String jsonList = "";
-			List<Pc> pcList = StartServlet.getPcList();
-			jsonList = getJsonList(pcList);
 
 			// JSON形式のメッセージリストを出力
 			PrintWriter out = resp.getWriter();
-			out.println(jsonList);
+			if(supportPc!= null) {
+				StartServlet.setRequestTime(supportPc.getPcId());
+
+				//pcListをJsonに変換
+				String jsonList = "";
+				List<Pc> pcList = StartServlet.getPcList();
+				jsonList = getJsonList(pcList);
+
+				out.println(jsonList);
+			} else {
+				//実験室外のIPアドレスにはnullを返す
+				out.println("null");
+			}
 
 		} else {
 			req.getRequestDispatcher("/error.html").forward(req,resp);
