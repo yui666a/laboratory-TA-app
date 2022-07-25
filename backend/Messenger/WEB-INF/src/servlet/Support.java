@@ -2,7 +2,7 @@ package servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.net.InetAddress;
+import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -15,6 +15,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Pc;
+import beans.PcJson;
 
 @WebServlet(urlPatterns = { "/v1/support/*" })
 //support/XXXの応答関数
@@ -50,29 +51,28 @@ public class Support extends HttpServlet {
 				System.out.println("予期しない状態遷移が発生しました");
 			}
 
-			//最終リクエスト時間を変更
-			String clientIpAddr = req.getRemoteAddr();
-			if(clientIpAddr.equals("0:0:0:0:0:0:0:1")) {
-				InetAddress cIpAddr = InetAddress.getLocalHost();
-				clientIpAddr = cIpAddr.getHostAddress();
-			}
-			Pc supportPc = getPcFromIpAddr(clientIpAddr);
+			//pcJsonListをJsonに変換
+			String jsonList = "";
+			List<Pc> pcList = StartServlet.getPcList();
 
+			List<PcJson> pcJsonList = new LinkedList<PcJson>();
+			for(Pc tempPc : pcList) {
+				if(tempPc.getIsLogin()) {
+					PcJson pcJson = new PcJson();
+					pcJson.setPcId(tempPc.getPcId());
+					pcJson.setIpAdress(tempPc.getIpAdress());
+					pcJson.setIsLogin(tempPc.getIsLogin());
+					pcJson.setIsStudent(tempPc.getIsStudent());
+					pcJson.setHelpStatus(tempPc.getHelpStatus());
+					pcJson.setHandPriority(tempPc.getHandPriority());
+					pcJsonList.add(pcJson);
+				}
+			}
+			jsonList = getJsonList(pcJsonList);
+			
 			// JSON形式のメッセージリストを出力
 			PrintWriter out = resp.getWriter();
-			if(supportPc!= null) {
-				StartServlet.setRequestTime(supportPc.getPcId());
-
-				//pcListをJsonに変換
-				String jsonList = "";
-				List<Pc> pcList = StartServlet.getPcList();
-				jsonList = getJsonList(pcList);
-
-				out.println(jsonList);
-			} else {
-				//実験室外のIPアドレスにはnullを返す
-				out.println("null");
-			}
+			out.println(jsonList);
 
 		} else {
 			req.getRequestDispatcher("/error.html").forward(req,resp);
@@ -80,11 +80,11 @@ public class Support extends HttpServlet {
 	}
 
 	//---------------補助関数-----------------------------------------------------
-	private String getJsonList(List<Pc> pcList) throws JsonProcessingException{
+	private String getJsonList(List<PcJson> pcJsonList) throws JsonProcessingException{
 		String jsonList = "";
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			jsonList = mapper.writeValueAsString(pcList);
+			jsonList = mapper.writeValueAsString(pcJsonList);
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
@@ -96,13 +96,6 @@ public class Support extends HttpServlet {
 			if(pcId.equals(pc.getPcId())) {
 				return pc;
 			}
-		}
-		return null;
-	}
-	private Pc getPcFromIpAddr(String addr) {
-		List<Pc> pcList = StartServlet.getPcList();
-		for(Pc pc : pcList) {
-			if(addr.equals(pc.getIpAdress())) return pc;
 		}
 		return null;
 	}
