@@ -39,9 +39,14 @@ public class Call extends HttpServlet {
 			//現在のヘルプ状態を取得
 			String preHelpStatus = pc.getHelpStatus();
 
-			//現在のヘルプ状態を反転
-			if(preHelpStatus.equals("None")) StartServlet.setHelpStatus("ics"+myPcId, "Troubled");
-			else StartServlet.setHelpStatus("ics"+myPcId, "None");
+			//現在のヘルプ状態から遷移する None->Troubled, Troubled,Supporting->None
+			if(preHelpStatus.equals("None")) {
+				StartServlet.setHelpStatus("ics"+myPcId, "Troubled");
+				StartServlet.setHandTime("ics"+myPcId, false);
+			}else{
+				StartServlet.setHelpStatus("ics"+myPcId, "None");
+				StartServlet.setHandTime("ics"+myPcId, true);
+			}
 			
 			//最終リクエスト時間を変更
 			StartServlet.setRequestTime(pc.getPcId());

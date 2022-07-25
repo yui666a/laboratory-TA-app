@@ -41,8 +41,10 @@ public class Support extends HttpServlet {
 			//現在のヘルプ状態から状態を遷移する "None"状態は遷移なし
 			if(preHelpStatus.equals("Troubled")) {
 				StartServlet.setHelpStatus("ics"+myPcId, "Supporting");
+				StartServlet.setHandTime("ics"+myPcId, true);
 			}else if(preHelpStatus.equals("Supporting")) {
 				StartServlet.setHelpStatus("ics"+myPcId, "None");
+				StartServlet.setHandTime("ics"+myPcId, true);
 			}else {
 				//"None"状態は遷移なし
 				System.out.println("予期しない状態遷移が発生しました");
