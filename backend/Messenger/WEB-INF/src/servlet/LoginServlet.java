@@ -42,12 +42,9 @@ public class LoginServlet extends HttpServlet {
 //			// ログイン成功時の処理
 			StartServlet.setLogin(pc.getPcId(), true);
 			StartServlet.setRequestTime(pc.getPcId());
-
-			req.getRequestDispatcher("/index.html").forward(req,resp);
-		}else{
-//			//ログイン失敗時の処理
-			req.getRequestDispatcher("/error.html").forward(req,resp);
 		}
+
+		req.getRequestDispatcher("/index.html").forward(req,resp);
 	}
 
 //-----------------補助関数-------------------------------------------------
