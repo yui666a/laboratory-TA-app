@@ -64,6 +64,7 @@ public class Call extends HttpServlet {
 					pcJson.setIsLogin(tempPc.getIsLogin());
 					pcJson.setIsStudent(tempPc.getIsStudent());
 					pcJson.setHelpStatus(tempPc.getHelpStatus());
+					pcJson.setHandPriority(tempPc.getHandPriority());
 					pcJsonList.add(pcJson);
 				}
 			}
