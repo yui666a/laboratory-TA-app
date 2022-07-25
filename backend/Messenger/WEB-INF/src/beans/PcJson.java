@@ -9,13 +9,13 @@ public class PcJson{
 	protected String helpStatus = null; // 手を挙げていない: None
 											//	手を挙げている: Troubled
 											// TA教員対応中: Supporting
-	protected int handOrder = -1;
+	protected int handPriority = -1;
 	//--------アクセッサ関係-------------------------------------------------
-	public int getHandOrder() {
-		return handOrder;
+	public int getHandPriority() {
+		return handPriority;
 	}
-	public void setHandOrder(int handOrder) {
-		this.handOrder = handOrder;
+	public void setHandPriority(int handPriority) {
+		this.handPriority = handPriority;
 	}
 	public String getHelpStatus() {
 		return helpStatus;
