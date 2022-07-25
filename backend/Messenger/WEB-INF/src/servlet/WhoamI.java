@@ -3,7 +3,6 @@ package servlet;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.net.InetAddress;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -37,45 +36,42 @@ public class WhoamI extends HttpServlet {
 			clientIpAddr = cIpAddr.getHostAddress();
 		}
 		Pc pc = getPcFromIpAddr(clientIpAddr);
-		
+
 		//テスト用
 		// Pc pc = getPcFromIpAddr("133.44.118.191");
-		
-		//最終リクエスト時間を変更
-		StartServlet.setRequestTime(pc.getPcId());
 
-		//pcJsonListをJsonに変換
-		String jsonList = "";
-		List<Pc> pcList = StartServlet.getPcList();
-		
-		List<PcJson> pcJsonList = new LinkedList<PcJson>();
-		for(Pc tempPc : pcList) {
-			if(tempPc.getIsLogin()) {
-				PcJson pcJson = new PcJson();
-				pcJson.setPcId(tempPc.getPcId());
-				pcJson.setIpAdress(tempPc.getIpAdress());
-				pcJson.setIsLogin(tempPc.getIsLogin());
-				pcJson.setIsStudent(tempPc.getIsStudent());
-				pcJson.setHelpStatus(tempPc.getHelpStatus());
-				pcJsonList.add(pcJson);
-			}
-		}
-		
-		jsonList = getJsonList(pcJsonList);
-		
 		// JSON形式のメッセージリストを出力
 		PrintWriter out = resp.getWriter();
-		out.println(jsonList);
+
+		//最終リクエスト時間を変更
+		if(pc!=null) {
+			StartServlet.setRequestTime(pc.getPcId());
+
+			//pcをJsonに変換
+			String jsonList = "";
+
+			PcJson pcJson = new PcJson();
+			pcJson.setPcId(pc.getPcId());
+			pcJson.setHelpStatus(pc.getHelpStatus());
+			pcJson.setIpAdress(pc.getIpAdress());
+			pcJson.setIsStudent(pc.getIsStudent());
+			pcJson.setIsLogin(pc.getIsLogin());
+			jsonList = getJsonList(pcJson);
+			
+			out.println(jsonList);
+		}else {
+			//実験室外のIPアドレスにはnullを返す
+			out.println("null");
+		}
 	}
 
 	//---------------補助関数-----------------------------------------------------
-	private String getJsonList(List<PcJson> pcJsonList) throws JsonProcessingException{
+	private String getJsonList(PcJson pcJson) throws JsonProcessingException{
 		String jsonList = "";
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			jsonList = mapper.writeValueAsString(pcJsonList);
+			jsonList = mapper.writeValueAsString(pcJson);
 		} catch (JsonProcessingException e) {
-			// TODO 自動生成された catch ブロック
 			e.printStackTrace();
 		}
 		return jsonList;

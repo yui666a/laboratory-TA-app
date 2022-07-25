@@ -70,6 +70,7 @@ public class Support extends HttpServlet {
 
 				out.println(jsonList);
 			} else {
+				//実験室外のIPアドレスにはnullを返す
 				out.println("null");
 			}
 
