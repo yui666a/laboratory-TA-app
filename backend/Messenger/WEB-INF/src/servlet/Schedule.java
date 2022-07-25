@@ -32,7 +32,7 @@ class Schedule extends TimerTask {
 		for(Pc pc : pcList) {
 			
 			//挙手の順番をリセット
-			pc.setHandOrder(-1);
+			pc.setHandPriority(-1);
 			//1. 挙手しているPCの数とその時間を調べる
 			if(pc.getLastHandTime() != null) {
 				handTimeList[listNum] = pc.getLastHandTime();
@@ -56,7 +56,7 @@ class Schedule extends TimerTask {
 		for(int i=0; i<listNum; i++) {
 			for(Pc pc : pcList) {
 				if(pc.getLastHandTime() == handTimeList[i]) {
-					pc.setHandOrder(i+1);
+					pc.setHandPriority(i+1);
 				}
 			}
 		}
